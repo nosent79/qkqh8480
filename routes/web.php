@@ -15,7 +15,7 @@ $app->get('/', function () use ($app) {
      return redirect()->route('auth.login');
 });
 
-$app->group(['prefix' => 'auth', 'middleware' => 'auth'], function () use ($app) {
+$app->group(['prefix' => 'auth'], function () use ($app) {
     $app->get('login', [
         'as' => 'auth.login', 'uses' => 'LoginController@login'
     ]);

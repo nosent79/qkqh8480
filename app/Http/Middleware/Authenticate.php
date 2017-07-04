@@ -35,14 +35,7 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (in_array($request->path(), [
-            'auth/loginOK',
-            'auth/login',
-        ])) {
-            return $next($request);
-        }
-
-        if ($this->auth->guard($guard)->guest()) {
+        if (! $request->session()->has('id')) {
 
             return redirect()->route('auth.login');
         }

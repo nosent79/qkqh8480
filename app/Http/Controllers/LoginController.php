@@ -28,6 +28,8 @@ class LoginController
      */
     public function login()
     {
+        $this->request->session()->put('id', 'jerry');
+
         $params = collect($this->request->all());
 
         return view('auth.login',
