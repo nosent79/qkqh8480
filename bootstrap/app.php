@@ -58,14 +58,13 @@ $app->singleton(
 | route or middleware that'll be assigned to some specific routes.
 |
 */
-
 // $app->middleware([
 //    App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+ $app->routeMiddleware([
+     'auth' => App\Http\Middleware\Authenticate::class,
+ ]);
 
 /*
 |--------------------------------------------------------------------------
@@ -79,7 +78,7 @@ $app->singleton(
 */
 
 // $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
+ $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
 /*
@@ -94,6 +93,7 @@ $app->singleton(
 */
 $config = [
     'app',
+//    'session',
 //    'database',
 //    'cache'
 ];
@@ -105,5 +105,16 @@ $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
 foreach ($config as $file) {
     $app->configure($file);
 }
+
+// Add `Session` middleware
+$app->middleware(Illuminate\Session\Middleware\StartSession::class);
+
+// Add `SessionServiceProvider`
+$app->register(Illuminate\Session\SessionServiceProvider::class);
+
+// fix `BindingResolutionException` problem
+$app->bind(Illuminate\Session\SessionManager::class, function ($app) {
+    return $app->make('session');
+});
 
 return $app;

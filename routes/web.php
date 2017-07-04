@@ -12,25 +12,50 @@
 */
 
 $app->get('/', function () use ($app) {
-    return url();
-//    return $app->version();
+     return redirect()->route('auth.login');
 });
 
-$app->get('/login', [
-    'as' => 'login', 'uses' => 'LoginController@login'
-]);
-
-$app->group(['prefix' => 'auth'], function () use ($app) {
+$app->group(['prefix' => 'auth', 'middleware' => 'auth'], function () use ($app) {
     $app->get('login', [
         'as' => 'auth.login', 'uses' => 'LoginController@login'
     ]);
-
     $app->get('login_ok', [
         'as' => 'auth.login_ok', 'uses' => 'LoginController@loginOK'
     ]);
 
     $app->get('logout', [
         'as' => 'auth.logout', 'uses' => 'LoginController@logout'
+    ]);
+});
+
+$app->get('test', function () {
+    $_SESSION['id'] = 'jerry';
+});
+
+$app->group(['prefix' => 'task', 'middleware' => 'auth'], function () use ($app) {
+    // 업무 등록 화면
+    $app->get('register', [
+        'as' => 'task.register', 'uses' => 'TaskController@register'
+    ]);
+
+    // 업무 등록 처리
+    $app->get('register_ok', [
+        'as' => 'task.register_ok', 'uses' => 'TaskController@registerOK'
+    ]);
+
+    // 업무 수정 화면
+    $app->get('modify', [
+        'as' => 'task.modify', 'uses' => 'TaskController@modify'
+    ]);
+
+    // 업무 수정 처리
+    $app->get('modify_ok', [
+        'as' => 'task.modify_ok', 'uses' => 'TaskController@modifyOK'
+    ]);
+
+    // 업무 삭제
+    $app->get('delete', [
+        'as' => 'task.delete', 'uses' => 'TaskController@delete'
     ]);
 });
 

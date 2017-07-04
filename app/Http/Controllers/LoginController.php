@@ -28,6 +28,7 @@ class LoginController
      */
     public function login()
     {
+        dd($this->request->session());
         $params = collect($this->request->all());
 
         return view('auth.login',
@@ -44,13 +45,13 @@ class LoginController
      */
     public function loginOK()
     {
-        $params = collect($this->request->all());
+        try {
+            $params = collect($this->request->all());
 
-        return view('auth.login',
-            [
-                'params' => $params
-            ]
-        );
+            return redirect()->route('');
+        } catch (\Exception $e) {
+
+        }
     }
 
     public function logout()
