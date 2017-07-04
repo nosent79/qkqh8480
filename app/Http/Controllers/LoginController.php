@@ -28,7 +28,6 @@ class LoginController
      */
     public function login()
     {
-        dd($this->request->session());
         $params = collect($this->request->all());
 
         return view('auth.login',

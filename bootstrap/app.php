@@ -93,7 +93,7 @@ $app->singleton(
 */
 $config = [
     'app',
-//    'session',
+    'session',
 //    'database',
 //    'cache'
 ];

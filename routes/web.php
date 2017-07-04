@@ -28,10 +28,6 @@ $app->group(['prefix' => 'auth', 'middleware' => 'auth'], function () use ($app)
     ]);
 });
 
-$app->get('test', function () {
-    $_SESSION['id'] = 'jerry';
-});
-
 $app->group(['prefix' => 'task', 'middleware' => 'auth'], function () use ($app) {
     // 업무 등록 화면
     $app->get('register', [
