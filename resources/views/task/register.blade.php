@@ -10,13 +10,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label" for="">구분</label>
                     <div class="col-sm-6 text-center" data-toggle="buttons">
-                        <label class="btn btn-warning _task_type" style="width:49%;">
+                        <label class="btn btn-default _task_type" style="width:49%;">
                             <input name="task_type" type="radio" value="product" />
-                            <span class="fa fa-check"></span>제품
+                            <span class="fa fa-check"></span>&nbsp;제품
                         </label>
-                        <label class="btn btn-warning _task_type" style="width:49%;">
+                        <label class="btn btn-default _task_type" style="width:49%;">
                             <input name="task_type" type="radio" value="price" />
-                            <span class="fa fa-check"></span>원고료
+                            <span class="fa fa-check"></span>&nbsp;원고료
                         </label>
                     </div>
                 </div>
@@ -131,7 +131,7 @@
 @stop
 
 @section('add_js')
-    {{--<script src="/js/validator.js"></script>--}}
+    <script src="/js/validator.js"></script>
     {{--<script src="/js/validator_event.js"></script>--}}
     <script>
         function cleanDatepicker() {        //datepicker 삭제 버튼
@@ -161,7 +161,6 @@
                 $("#task_type").val(type);
             });
         });
-
 
         $(function() {
             cleanDatepicker();
@@ -194,14 +193,49 @@
             $.datepicker.setDefaults($.datepicker.regional['ko']);
 
             $("#frmTask").submit(function() {
-                console.log($(":input:radio[name=task_type]:checked").val());
-                return false;
+                var task_type = $('input:radio[name=task_type]');
+
+                {{--console.log("@" + checkDateFormat("2017-07-05"));--}}
+                {{--return false;--}}
 
                 // 태스크 타입 체크
-                if ($('input:radio[name=task_type]').is(':checked')) {
+                if (task_type.is(':checked')) {
                     return false;
                 }
+
+                // 마감기한 체크
+                if (! checkDateFormat($("#deadline_date").val())) {
+                    return false;
+                }
+
+                if (task_type.val() === "price") {
+                    if (! checkDateFormat($("#deposit_date").val())) {
+                        return false;
+                    }
+                }
+
+                return true;
             });
         });
+
+        function checkDateFormat(date)
+        {
+            var dayRegExp = /^(19|20)\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])$/;
+
+            return dayRegExp.test(date);
+        }
+
+//        $.extend({
+//            checkDateFormat : function(date) {
+//                var df = /[0-9]{4}-[0-9]{2}-[0-9]{2}/;
+//                var checkdate = true;
+//                if (date.match(df) != null) {
+//                    checkdate = false;
+//                }
+//
+//                return checkdate;
+//            }
+//        });
+
     </script>
 @stop
