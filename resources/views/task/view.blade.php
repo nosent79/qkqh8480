@@ -6,18 +6,15 @@
                 <h1><small>태스크 등록</small></h1>
             </div>
             <form id="frmTask" name="frmTask" class="form-horizontal" method="post" action="{{ route('task.register_ok') }}">
-                {{--<input type="hidden" id="task_type" name="task_type" required />--}}
+                <input type="hidden" id="task_type" name="task_type" required />
                 <div class="form-group">
                     <label class="col-sm-3 control-label" for="">구분</label>
-                    <div class="col-sm-6 text-center" data-toggle="buttons">
-                        <label class="btn btn-warning _task_type" style="width:49%;">
-                            <input name="task_type" type="radio" value="product" />
-                            <span class="fa fa-check"></span>제품
-                        </label>
-                        <label class="btn btn-warning _task_type" style="width:49%;">
-                            <input name="task_type" type="radio" value="price" />
-                            <span class="fa fa-check"></span>원고료
-                        </label>
+                    <div class="col-sm-6">
+                        <div class="btn-group btn-group-justified" role="group" aria-label="태스크 구분">
+                            <div class="btn-group" role="group">
+                                <button type="button" data-type='product' class="btn btn-default _task_type">제품</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -105,103 +102,4 @@
             <hr>
         </div>
     </article>
-@stop
-
-@section('css')
-    @parent
-    <style>
-        .radio ._ts {
-            padding-left: 60px;
-            min-height: 25px;
-        }
-
-        .radio ._tp {
-            padding-left: 60px;
-            min-width:90px;
-        }
-
-        /* custom checkbox */
-        .btn span.fa {
-            opacity: 0;
-        }
-        .btn.active span.fa {
-            opacity: 1;
-        }
-    </style>
-@stop
-
-@section('add_js')
-    {{--<script src="/js/validator.js"></script>--}}
-    {{--<script src="/js/validator_event.js"></script>--}}
-    <script>
-        function cleanDatepicker() {        //datepicker 삭제 버튼
-            var old_fn = $.datepicker._updateDatepicker;
-
-            $.datepicker._updateDatepicker = function(inst) {
-                old_fn.call(this, inst);
-
-                var buttonPane = $(this).datepicker("widget").find(".ui-datepicker-buttonpane");
-
-                $("<button type='button' class='ui-datepicker-clean ui-state-default ui-priority-primary ui-corner-all'>clear</button>").appendTo(buttonPane).click(function(ev) {
-                    $.datepicker._clearDate(inst.input);
-                }) ;
-            }
-        }
-
-        $(document).ready(function() {
-            $("._task_type").click(function () {
-                var flag = $(this).children('input').val();
-                var type = $('input:radio[name=task_type]:input[value=' + flag + ']').attr("checked", true).val();
-
-                if (type === "product") {
-                    $("#task_price").hide();
-                } else {
-                    $("#task_price").show();
-                }
-                $("#task_type").val(type);
-            });
-        });
-
-
-        $(function() {
-            cleanDatepicker();
-
-            $("._datepicker").datepicker({
-                dateFormat: 'yy-mm-dd'
-            });
-
-            $.datepicker.regional['ko'] = {
-                closeText: '닫기',
-                showButtonPanel: true, // 캘린더 하단에 버튼 패널을 표시한다.
-                prevText: '이전',
-                nextText: '다음',
-                monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-                monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
-                dayNames: ['일','월','화','수','목','금','토'],
-                dayNamesShort: ['일','월','화','수','목','금','토'],
-                dayNamesMin: ['일','월','화','수','목','금','토'],
-                weekHeader: 'Wk',
-                dateFormat: 'yy-mm-dd',
-                firstDay: 0,
-                isRTL: false,
-                changeMonth: true,
-                changeYear: true,
-                showMonthAfterYear: true,
-                yearRange: 'c-99:c+99',
-                yearSuffix: ''
-            };
-
-            $.datepicker.setDefaults($.datepicker.regional['ko']);
-
-            $("#frmTask").submit(function() {
-                console.log($(":input:radio[name=task_type]:checked").val());
-                return false;
-
-                // 태스크 타입 체크
-                if ($('input:radio[name=task_type]').is(':checked')) {
-                    return false;
-                }
-            });
-        });
-    </script>
 @stop

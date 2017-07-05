@@ -28,7 +28,7 @@ class LoginController
      */
     public function login()
     {
-        $this->request->session()->put('id', 'jerry');
+        $this->request->session()->put('user_id', 'jerry');
 
         $params = collect($this->request->all());
 
@@ -47,11 +47,14 @@ class LoginController
     public function loginOK()
     {
         try {
-            $params = collect($this->request->all());
+            $datas = $this->request->all();
 
-            return redirect()->route('');
+            $this->request->session()->put('user_id', $datas['user_id']);
+            $this->request->session()->put('user_id', $datas['user_pwd']);
+
+            return redirect()->route('task.index');
         } catch (\Exception $e) {
-
+            log::error(__METHOD__, $e);
         }
     }
 
@@ -62,7 +65,7 @@ class LoginController
                 $this->request->session()->flush();
             }
         } catch (\Exception $e) {
-            Log::error(__METHOD__);
+            Log::error(__METHOD__, $e);
         }
     }
 }

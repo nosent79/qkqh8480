@@ -19,7 +19,7 @@ $app->group(['prefix' => 'auth'], function () use ($app) {
     $app->get('login', [
         'as' => 'auth.login', 'uses' => 'LoginController@login'
     ]);
-    $app->get('login_ok', [
+    $app->post('login_ok', [
         'as' => 'auth.login_ok', 'uses' => 'LoginController@loginOK'
     ]);
 
@@ -29,13 +29,23 @@ $app->group(['prefix' => 'auth'], function () use ($app) {
 });
 
 $app->group(['prefix' => 'task', 'middleware' => 'auth'], function () use ($app) {
+    // 업무 리스트
+    $app->get('index', [
+        'as' => 'task.index', 'uses' => 'TaskController@index'
+    ]);
+
+    // 업무 리스트
+    $app->get('view', [
+        'as' => 'task.view', 'uses' => 'TaskController@view'
+    ]);
+
     // 업무 등록 화면
     $app->get('register', [
         'as' => 'task.register', 'uses' => 'TaskController@register'
     ]);
 
     // 업무 등록 처리
-    $app->get('register_ok', [
+    $app->post('register_ok', [
         'as' => 'task.register_ok', 'uses' => 'TaskController@registerOK'
     ]);
 
@@ -45,12 +55,12 @@ $app->group(['prefix' => 'task', 'middleware' => 'auth'], function () use ($app)
     ]);
 
     // 업무 수정 처리
-    $app->get('modify_ok', [
+    $app->post('modify_ok', [
         'as' => 'task.modify_ok', 'uses' => 'TaskController@modifyOK'
     ]);
 
     // 업무 삭제
-    $app->get('delete', [
+    $app->post('delete', [
         'as' => 'task.delete', 'uses' => 'TaskController@delete'
     ]);
 });

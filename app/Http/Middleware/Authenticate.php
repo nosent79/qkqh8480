@@ -35,7 +35,7 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (! $request->session()->has('id')) {
+        if (! $request->session()->has('user_id')) {
 
             return redirect()->route('auth.login');
         }

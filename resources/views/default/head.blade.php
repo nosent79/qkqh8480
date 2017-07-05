@@ -2,7 +2,7 @@
     <meta charset="utf-8">
     <meta name="robots" content="noindex, nofollow" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="">
@@ -10,6 +10,16 @@
 
 @section('title')
     <title>@yield('title', config('app.title'))</title>
+@show
+
+@section('css')
+    <!-- Bootstrap core CSS -->
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bootstrap/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 부가적인 테마 -->
+    <link href="/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <link href="/jquery/jquery-ui.min.css" rel="stylesheet">
 @show
 
 @section('script')
@@ -24,7 +34,3 @@
     <![endif]-->
 @show
 
-@section('css')
-    <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
-@show
