@@ -6,7 +6,6 @@
                 <h1><small>태스크 등록</small></h1>
             </div>
             <form id="frmTask" name="frmTask" class="form-horizontal" method="post" action="{{ route('task.register_ok') }}">
-                {{--<input type="hidden" id="task_type" name="task_type" required />--}}
                 <div class="form-group">
                     <label class="col-sm-3 control-label" for="">구분</label>
                     <div class="col-sm-6 text-center" data-toggle="buttons">
@@ -30,12 +29,12 @@
                     <label class="col-sm-3 control-label" for="">상태</label>
                     <div class="col-sm-6">
                         <div class="radio">
-                            <label class="_ts"><input type="radio" name="task_state" id="task_state_1" value="w" checked>대&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기</label>
-                            <label class="_ts"><input type="radio" name="task_state" id="task_state_2" value="cw">컨펌대기</label>
-                            <label class="_ts"><input type="radio" name="task_state" id="task_state_3" value="dw">입금대기</label>
-                            <label class="_ts"><input type="radio" name="task_state" id="task_state_4" value="dw">입금완료</label>
-                            <label class="_ts"><input type="radio" name="task_state" id="task_state_5" value="wc">작업완료</label>
-                            <label class="_ts"><input type="radio" name="task_state" id="task_state_6" value="d">삭&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제</label>
+                            <label class="_ts"><input type="radio" name="task_state" value="w" checked>대&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기</label>
+                            <label class="_ts"><input type="radio" name="task_state" value="cw">컨펌대기</label>
+                            <label class="_ts"><input type="radio" name="task_state" value="dw">입금대기</label>
+                            <label class="_ts"><input type="radio" name="task_state" value="dc">입금완료</label>
+                            <label class="_ts"><input type="radio" name="task_state" value="wc">작업완료</label>
+                            <label class="_ts"><input type="radio" name="task_state" value="d">삭&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제</label>
                         </div>
                     </div>
                 </div>
@@ -69,10 +68,10 @@
                     <label class="col-sm-3 control-label" for="">중요도</label>
                     <div class="col-sm-6">
                         <div class="radio">
-                            <label class="_tp"><input type="radio" name="priority" id="priority_1" value="a" checked>긴급</label>
-                            <label class="_tp"><input type="radio" name="priority" id="priority_2" value="b">높음</label>
-                            <label class="_tp"><input type="radio" name="priority" id="priority_3" value="c">중간</label>
-                            <label class="_tp"><input type="radio" name="priority" id="priority_4" value="d">낮음</label>
+                            <label class="_tp"><input type="radio" name="priority" value="a" checked>긴급</label>
+                            <label class="_tp"><input type="radio" name="priority" value="b">높음</label>
+                            <label class="_tp"><input type="radio" name="priority" value="c">중간</label>
+                            <label class="_tp"><input type="radio" name="priority" value="d">낮음</label>
                         </div>
                     </div>
                 </div>
@@ -109,25 +108,8 @@
 
 @section('css')
     @parent
-    <style>
-        .radio ._ts {
-            padding-left: 60px;
-            min-height: 25px;
-        }
 
-        .radio ._tp {
-            padding-left: 60px;
-            min-width:90px;
-        }
-
-        /* custom checkbox */
-        .btn span.fa {
-            opacity: 0;
-        }
-        .btn.active span.fa {
-            opacity: 1;
-        }
-    </style>
+    <link href="/css/task.css" rel="stylesheet">
 @stop
 
 @section('add_js')
@@ -195,11 +177,8 @@
             $("#frmTask").submit(function() {
                 var task_type = $('input:radio[name=task_type]');
 
-                {{--console.log("@" + checkDateFormat("2017-07-05"));--}}
-                {{--return false;--}}
-
                 // 태스크 타입 체크
-                if (task_type.is(':checked')) {
+                if (! task_type.is(':checked')) {
                     return false;
                 }
 

@@ -1,0 +1,17 @@
+.radio ._ts {
+    padding-left: 40px;
+    min-height: 25px;
+}
+
+.radio ._tp {
+    padding-left: 40px;
+    min-width:90px;
+}
+
+/* custom checkbox */
+.btn span.fa {
+    opacity: 0;
+}
+.btn.active span.fa {
+    opacity: 1;
+}

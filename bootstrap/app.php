@@ -93,7 +93,7 @@ $app->register(App\Providers\EventServiceProvider::class);
 $config = [
     'app',
     'session',
-//    'database',
+    'constants',
 //    'cache'
 ];
 

@@ -10,10 +10,9 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
-
-$app->get('/', function () use ($app) {
+$app->get('/', ['as' => '/', function () use ($app) {
      return redirect()->route('auth.login');
-});
+}]);
 
 $app->group(['prefix' => 'auth'], function () use ($app) {
     $app->get('login', [
@@ -35,9 +34,9 @@ $app->group(['prefix' => 'task', 'middleware' => 'auth'], function () use ($app)
     ]);
 
     // 업무 리스트
-    $app->get('view', [
-        'as' => 'task.view', 'uses' => 'TaskController@view'
-    ]);
+    $app->get('view/{task_id:[0-9]+}', [
+        'as' => 'task.view', 'uses' => 'TaskController@view', function ($task_id) {
+    }]);
 
     // 업무 등록 화면
     $app->get('register', [
@@ -50,9 +49,9 @@ $app->group(['prefix' => 'task', 'middleware' => 'auth'], function () use ($app)
     ]);
 
     // 업무 수정 화면
-    $app->get('modify', [
-        'as' => 'task.modify', 'uses' => 'TaskController@modify'
-    ]);
+    $app->get('modify/{task_id:[0-9]+}', [
+        'as' => 'task.modify', 'uses' => 'TaskController@modify', function ($task_id) {
+    }]);
 
     // 업무 수정 처리
     $app->post('modify_ok', [
@@ -60,9 +59,9 @@ $app->group(['prefix' => 'task', 'middleware' => 'auth'], function () use ($app)
     ]);
 
     // 업무 삭제
-    $app->post('delete', [
-        'as' => 'task.delete', 'uses' => 'TaskController@delete'
-    ]);
+    $app->get('delete/{task_id:[0-9]+}', [
+        'as' => 'task.delete', 'uses' => 'TaskController@delete', function ($task_id) {
+    }]);
 });
 
 /*
