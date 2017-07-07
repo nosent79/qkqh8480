@@ -81,4 +81,15 @@ class MemberController extends Controller
             Log::error(__METHOD__ . $e);
         }
     }
+
+    /**
+     * 초기 데이터 등록
+     */
+    public function initMember()
+    {
+        $params = collect(['user_id'=>'jerry', 'user_pwd'=>'jerry', 'user_email' => 'nosent79@gmail.com']);
+        $result = $this->member->setMember($params);
+
+        echo ($result > 0) ? "성공" : "실패";
+    }
 }

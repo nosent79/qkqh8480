@@ -22,6 +22,11 @@ $(function() {
         var type = $(this).children('input').val();
         setTaskType(type);
     });
+
+    $("._orderby").click(function () {
+        var url = $(this).data('href');
+        location.href = url;
+    });
 });
 
 function init(type)

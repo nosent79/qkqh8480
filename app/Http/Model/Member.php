@@ -21,11 +21,6 @@ class Member extends Model
                                 'user_id', 'user_name', 'user_pwd', 'user_email'
                             ];
 
-    public function tasks()
-    {
-        return $this->hasMany(Task::class);
-    }
-
     /**
      * 회원정보 가져오기
      * 
@@ -112,7 +107,26 @@ class Member extends Model
             return $this
                 ->where('user_id', app('session')->get('user_id'))
                 ->update(['user_pwd' => $new_pwd]);
+        } catch (\Exception $e) {
+            log::error(__METHOD__, $e);
 
+            return false;
+        }
+    }
+
+    public function setMember($params)
+    {
+        try {
+            $new_pwd = app('hash')->make($params->get('user_pwd'));
+
+            $rgInsert = [
+                'user_id' => $params->get('user_id'),
+                'user_name' => $params->get('user_name'),
+                'user_email' => $params->get('user_email'),
+                'user_pwd' => $new_pwd,
+            ];
+
+            return $this->insert($rgInsert);
         } catch (\Exception $e) {
             log::error(__METHOD__, $e);
 

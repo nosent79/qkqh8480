@@ -16,6 +16,14 @@
             </p>
         </div>
 
+        <div class="">
+            <p class="text-center">
+                <button class="btn btn-primary _orderby" type="button" data-href="{{ route('task.index', ['orderby' => 'deadline_date']) }}">
+                    정렬 - 마감기한
+                </button>
+            </p>
+        </div>
+
         {{-- 반복문 시작 --}}
         @forelse($tasks as $k => $v)
             @collect($v)
@@ -46,4 +54,5 @@
 @stop
 
 @section('add_js')
+    <script src="/js/task.js"></script>
 @stop

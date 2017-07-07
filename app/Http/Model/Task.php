@@ -20,15 +20,25 @@ class Task extends Model
                             ];
     public $timestamps = false;
 
-    public function member()
-    {
-        return $this->belongsTo(Member::class);
-    }
+//    public function member()
+//    {
+//        return $this->belongsTo(Member::class);
+//    }
 
 //    public function getTask()
 //    {
 //        return $this->get();
 //    }
+
+    public function getTask($params)
+    {
+        if ($params->has('orderby')) {
+            return $this->orderBy('deadline_date', 'desc')->get()->pluck('attributes');
+        } else {
+            return $this->get()->pluck('attributes');
+        }
+    }
+
 
     /**
      * 태스크 등록

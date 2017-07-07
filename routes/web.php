@@ -14,7 +14,13 @@ $app->get('/', ['as' => '/', function () use ($app) {
      return redirect()->route('auth.login');
 }]);
 
-$app->group(['prefix' => 'member', 'middleware' => 'auth'], function () use ($app) {
+//$app->group(['prefix' => 'member', 'middleware' => 'auth'], function () use ($app) {
+$app->group(['prefix' => 'member'], function () use ($app) {
+    // 초기 멤버 셋팅
+    $app->get('init_member', [
+        'as' => 'member.init_member', 'uses' => 'MemberController@initMember'
+    ]);
+
     // 비밀번호 변경 화면
     $app->get('change_password', [
         'as' => 'member.change_password', 'uses' => 'MemberController@changePassword'

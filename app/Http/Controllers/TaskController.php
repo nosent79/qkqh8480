@@ -32,11 +32,13 @@ class TaskController
      */
     public function index()
     {
-        $params = $this->request->all();
-        $tasks = $this->task->get();
+        $params = collect($this->request->all());
+
+        $tasks = $this->task->getTask($params);
+dd($tasks);
         return view('task.index', [
-            'params' => $params,
-            'tasks' => $tasks,
+            'params'    => $params,
+            'tasks'     => $tasks,
         ]);
     }
 
