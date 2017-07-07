@@ -23,7 +23,6 @@ class CreateTasksTable extends Migration
             $table->timestamp('deposit_date')->comment('입금일자')->nullable()->default('0000-00-00 00:00:00');
             $table->string('corp_name')->comment('업체명')->nullable()->default('');
             $table->string('blog_url')->comment('블로그주소')->nullable()->default('');
-            $table->enum('del_yn', ['y', 'n'])->comment('삭제여부')->nullable()->default('N');
             $table->string('comment')->comment('비고')->nullable()->default('');
             $table->timestamp('deadline_date')->comment('마감기한')->nullable()->default('0000-00-00 00:00:00');
             $table->timestamp('reg_date')->comment('등록일자')->nullable()->default('0000-00-00 00:00:00');

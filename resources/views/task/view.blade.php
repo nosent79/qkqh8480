@@ -1,6 +1,7 @@
 @extends('default.master')
 @section('body')
-    <article>
+    <div class="container">
+        @include('default.nav')
         <div class="col-md-12">
             <div class="page-header text-center">
                 <h1><small>태스크 상세</small></h1>
@@ -32,12 +33,12 @@
                     <label class="col-sm-3 control-label" for="">상태</label>
                     <div class="col-sm-6">
                         <div class="radio">
-                            <label class="_ts"><input type="radio" name="task_state" id="task_state_1" value="w" {{ getSelectedText($params->get('task_state'), 'w', 'checked') }} disabled="true">대&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기</label>
-                            <label class="_ts"><input type="radio" name="task_state" id="task_state_2" value="cw" {{ getSelectedText($params->get('task_state'), 'cw', 'checked') }} disabled="true">컨펌대기</label>
-                            <label class="_ts"><input type="radio" name="task_state" id="task_state_3" value="dw" {{ getSelectedText($params->get('task_state'), 'dw', 'checked') }} disabled="true">입금대기</label>
-                            <label class="_ts"><input type="radio" name="task_state" id="task_state_4" value="dc" {{ getSelectedText($params->get('task_state'), 'dc', 'checked') }} disabled="true">입금완료</label>
-                            <label class="_ts"><input type="radio" name="task_state" id="task_state_5" value="wc" {{ getSelectedText($params->get('task_state'), 'wc', 'checked') }} disabled="true">작업완료</label>
-                            <label class="_ts"><input type="radio" name="task_state" id="task_state_6" value="d" {{ getSelectedText($params->get('task_state'), 'd', 'checked') }} disabled="true">삭&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제</label>
+                            <label class="_ts"><input type="radio" name="task_state" value="w" {{ getSelectedText($params->get('task_state'), 'w', 'checked') }} disabled="true">대&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기</label>
+                            <label class="_ts"><input type="radio" name="task_state" value="cw" {{ getSelectedText($params->get('task_state'), 'cw', 'checked') }} disabled="true">컨펌대기</label>
+                            <label class="_ts"><input type="radio" name="task_state" value="dw" {{ getSelectedText($params->get('task_state'), 'dw', 'checked') }} disabled="true">입금대기</label>
+                            <label class="_ts"><input type="radio" name="task_state" value="dc" {{ getSelectedText($params->get('task_state'), 'dc', 'checked') }} disabled="true">입금완료</label>
+                            <label class="_ts"><input type="radio" name="task_state" value="wc" {{ getSelectedText($params->get('task_state'), 'wc', 'checked') }} disabled="true">작업완료</label>
+                            <label class="_ts"><input type="radio" name="task_state" value="d" {{ getSelectedText($params->get('task_state'), 'd', 'checked') }} disabled="true">삭&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제</label>
                         </div>
                     </div>
                 </div>
@@ -109,11 +110,12 @@
                 </div>
             </form>
         </div>
-    </article>
+    </div>
 @stop
 @section('css')
     @parent
 
+    <link href="/css/custom.css" rel="stylesheet">
     <link href="/css/task.css" rel="stylesheet">
 @stop
 

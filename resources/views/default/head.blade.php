@@ -17,7 +17,7 @@
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/bootstrap/css/font-awesome.min.css" rel="stylesheet">
     <!-- 부가적인 테마 -->
-    <link href="/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    {{--<link href="/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">--}}
 
     <link href="/jquery/jquery-ui.min.css" rel="stylesheet">
 @show

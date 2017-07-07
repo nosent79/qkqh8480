@@ -122,6 +122,17 @@
     }
 
     /**
+     * 선택 메뉴 강조
+     */
+    if (! function_exists('isSelectedMenu')) {
+        function isSelectedMenu($selected, $value)
+        {
+
+            return (strpos($value, $selected) ? true : false);
+        }
+    }
+
+    /**
      * 셀렉트박스 또는 체크박스 선택
      */
     if (! function_exists('getSelectedText')) {

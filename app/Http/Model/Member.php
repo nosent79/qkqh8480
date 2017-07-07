@@ -8,7 +8,6 @@
 namespace App\Http\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB as DB;
 use Illuminate\Support\Facades\Hash as Hash;
 use Illuminate\Support\Facades\Log as Log;
 
@@ -36,17 +35,43 @@ class Member extends Model
     public function getMember($params)
     {
         try {
-            $rstMember = $this
+            $rstMember = collect($this
                 ->select('user_id', 'user_pwd', 'user_name', 'user_email')
-                ->where('user_id', 'jerry')
-                ->first();
+                ->where('user_id', $params->get('user_id'))
+                ->first());
 
-            if (! Hash::check($params['user_pwd'], $rstMember['user_pwd'])) {
+            if (! Hash::check($params->get('user_pwd'), $rstMember->get('user_pwd'))) {
 
                 return false;
             }
 
             return $rstMember;
+        } catch (\Exception $e) {
+
+            return false;
+        }
+    }
+
+    /**
+     * 비밀번호 체크하기
+     *
+     * @param $params
+     * @return mixed
+     */
+    public function comparePassword($params)
+    {
+        try {
+            $rstMember = collect($this
+                ->select('user_pwd')
+                ->where('user_id', $params->get('user_id'))
+                ->first());
+
+            if (! Hash::check($params->get('old_pwd'), $rstMember->get('user_pwd'))) {
+
+                return false;
+            }
+
+            return true;
         } catch (\Exception $e) {
 
             return false;
@@ -62,14 +87,36 @@ class Member extends Model
     public function setMemberPassword($params)
     {
         try {
-            $password = app('hash')->make($params['user_pwd']);
+            $password = app('hash')->make($params->get('user_pwd'));
 
             return $this
-                        ->where('user_id', $params['user_id'])
+                        ->where('user_id', $params->get('user_id'))
                         ->update(['user_pwd' => $password]);
 
         } catch (\Exception $e) {
             log::error(__METHOD__, $e);
+        }
+    }
+
+    /**
+     * 비밀번호 변경
+     *
+     * @param $params
+     * @return mixed
+     */
+    public function changePassword($params)
+    {
+        try {
+            $new_pwd = app('hash')->make($params->get('user_pwd'));
+
+            return $this
+                ->where('user_id', app('session')->get('user_id'))
+                ->update(['user_pwd' => $new_pwd]);
+
+        } catch (\Exception $e) {
+            log::error(__METHOD__, $e);
+
+            return false;
         }
     }
 }

@@ -8,7 +8,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Exceptions\CustomException;
 use App\Http\Model\Member;
 use Illuminate\Http\Request;
@@ -28,7 +27,7 @@ class LoginController extends Controller
     /**
      * 로그인 폼 화면
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View 'auth.login'
      */
     public function login()
     {
@@ -43,14 +42,14 @@ class LoginController extends Controller
     /**
      * 로그인 처리
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse 'task.index'
      */
     public function loginOK()
     {
         try {
-            $datas = $this->request->all();
+            $params = collect($this->request->all());
 
-            $rstMember = $this->member->getMember($datas);
+            $rstMember = $this->member->getMember($params);
 
             if ($rstMember === false) {
                 throw new CustomException('회원정보가 일치하지 않습니다.', '1', route('auth.login'));
@@ -59,24 +58,31 @@ class LoginController extends Controller
             /*
              * 세션 등록하기
              */
-            $this->request->session()->put('user_id', $rstMember['attributes']['user_id']);
-            $this->request->session()->put('user_name', $rstMember['attributes']['user_name']);
-            $this->request->session()->put('user_email', $rstMember['attributes']['user_email']);
+            $this->request->session()->put('user_id', $rstMember->get('user_id'));
+            $this->request->session()->put('user_name', $rstMember->get('user_name'));
+            $this->request->session()->put('user_email', $rstMember->get('user_email'));
 
             return redirect()->route('task.index');
         } catch (CustomException $e) {
             echo $e;
         } catch (\Exception $e) {
             Log::error(__METHOD__. $e);
+
+            fnMoveUrl('오류가 발생했습니다.', 1, route('auth.login'));
         }
     }
 
+    /**
+     * 로그아웃 처리
+     */
     public function logout()
     {
         try {
             if ($this->request->session()->has('user_id')) {
                 $this->request->session()->flush();
             }
+
+            fnMoveUrl('로그아웃 되었습니다.', 1, route('auth.login'));
         } catch (\Exception $e) {
             Log::error(__METHOD__, $e);
         }

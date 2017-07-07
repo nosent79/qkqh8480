@@ -52,8 +52,8 @@ class TaskController
             }
 
 //            삭제된 데이터를 보여줄 것인가 대한 논의 필요
-//            $rstTask = collect($this->task::where('task_id', '1')->where('task_state', '<>', 'd')->first());
-            $rstTask = collect($this->task::where('task_id', '1')->first());
+//            $rstTask = collect($this->task::where('task_id', $task_id)->where('task_state', '<>', 'd')->first());
+            $rstTask = collect($this->task::where('task_id', $task_id)->first());
             if ($rstTask->isEmpty()) {
                 throw new CustomException('데이터가 없습니다.', 1, route('task.index'));
             }
@@ -118,7 +118,7 @@ class TaskController
                 throw new CustomException('비정상적인 접근입니다.', 1, route('task.index'));
             }
 
-            $rstTask = collect($this->task::where('task_id', '1')->first());
+            $rstTask = collect($this->task::where('task_id', $task_id)->first());
 
             return view('task.modify', [
                 'params' => $rstTask,

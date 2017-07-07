@@ -1,6 +1,7 @@
 ﻿@extends('default.master')
 @section('body')
     <div class="container">
+        @include('default.nav')
         <form class="form-signin" method="post" action="{{ route('auth.login_ok') }}">
             <h2 class="form-signin-heading">로그인</h2>
             <label for="user_id" class="sr-only">Email address</label>
@@ -15,6 +16,11 @@
             <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
         </form>
     </div> <!-- /container -->
+@stop
+@section('css')
+    @parent
+
+    <link href="/css/custom.css" rel="stylesheet">
 @stop
 @section('add_js')
     <script>

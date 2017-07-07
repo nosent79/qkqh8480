@@ -1,6 +1,7 @@
 @extends('default.master')
 @section('body')
-    <article>
+    <div class="container">
+        @include('default.nav')
         <div class="col-md-12">
             <div class="page-header text-center">
                 <h1><small>태스크 수정</small></h1>
@@ -106,12 +107,13 @@
             </form>
             <hr>
         </div>
-    </article>
+    </div>
 @stop
 
 @section('css')
     @parent
 
+    <link href="/css/custom.css" rel="stylesheet">
     <link href="/css/task.css" rel="stylesheet">
 @stop
 
