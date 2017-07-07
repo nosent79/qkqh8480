@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,6 +12,13 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    public function boot()
+    {
+        Blade::directive('collect', function($v) {
+            return "<?php {$v} = collect({$v}); ?>";
+        });
+    }
+
     public function register()
     {
 //        if ($this->app->environment() !== 'production') {

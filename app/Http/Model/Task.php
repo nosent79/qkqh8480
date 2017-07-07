@@ -25,6 +25,10 @@ class Task extends Model
         return $this->belongsTo(Member::class);
     }
 
+//    public function getTask()
+//    {
+//        return $this->get();
+//    }
 
     /**
      * 태스크 등록
