@@ -2,7 +2,6 @@
 @section('body')
     <div class="container">
         @include('default.nav')
-
         <div class="">
             <p class="text-center">
                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#memo" aria-expanded="false" aria-controls="">
@@ -22,32 +21,31 @@
                     필터
                 </button>
             <div class="collapse" id="filter">
+                <form id="frmSearch" name="frmSearch" class="form-horizontal" method="get" action="{{ route('task.index') }}">
                 <div class="well">
-                    <select class="form-control" id="orderby" name="orderby">
-                        <option value="deadline_date_desc">최신순</option>
-                        <option value="deadline_date_asc">과거순</option>
+                    {{--<select class="form-control" name="orderby[reg_date]">--}}
+                        {{--<option value="">전체</option>--}}
+                        {{--<option value="asc">과거기준</option>--}}
+                        {{--<option value="desc"></option>--}}
+                    {{--</select>--}}
+                    <select class="form-control" name="orderby[deadline_date]">
+                        {{--<option value="desc">마감</option>--}}
+                        <option value="asc">마감임박</option>
                     </select>
-                    <select class="form-control" id="orderby_task_state" name="orderby">
+                    <select class="form-control" name="task_state">
                         <option value="">전체</option>
                         @foreach(config('constants.task')['task_state'] as $k => $v)
-                        <option value="{{ $k }}">{{ $v }}</option>
+                        <option value="{{ $k }}" {{ getSelectedText($k, $params->get('task_state'), 'selected') }}>{{ $v }}</option>
                         @endforeach
                     </select>
                     <div class="pt10">
-                        <button class="btn btn-primary" type="button" data-href="{{ route('task.index', ['orderby' => 'deadline_date']) }}">조회</button>
+                        <button class="btn btn-primary" type="submit">조회</button>
                     </div>
                 </div>
+                </form>
             </div>
             </p>
         </div>
-
-        {{--<div class="">--}}
-            {{--<p class="text-center">--}}
-                {{--<button class="btn btn-primary _orderby" type="button" data-href="{{ route('task.index', ['orderby' => 'deadline_date']) }}">--}}
-                    {{--정렬 - 마감기한--}}
-                {{--</button>--}}
-            {{--</p>--}}
-        {{--</div>--}}
 
         {{-- 반복문 시작 --}}
         @forelse($tasks as $k => $v)

@@ -7,6 +7,7 @@
  */
 namespace App\Http\Model;
 
+use App\Exceptions\CustomException;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
@@ -20,16 +21,6 @@ class Task extends Model
                             ];
     public $timestamps = false;
 
-//    public function member()
-//    {
-//        return $this->belongsTo(Member::class);
-//    }
-
-//    public function getTask()
-//    {
-//        return $this->get();
-//    }
-
     /**
      * 삭제 제외한 태스크 가져오기
      *
@@ -38,10 +29,41 @@ class Task extends Model
      */
     public function getTaskExceptDeleted($params)
     {
-        if ($params->has('orderby')) {
-            return $this->where('task_state', '<>', 'd')->orderBy('deadline_date', 'desc')->get()->pluck('attributes');
-        } else {
-            return $this->where('task_state', '<>', 'd')->get()->pluck('attributes');
+        try {
+            $column = $params->get('orderby');
+            $orderby = 'deadline_date';
+            $type = 'asc';
+
+            $query = $this->where('task_state', '<>', 'd');
+
+            // 상태
+            if ($params->has('task_state')) {
+                $where = 'task_state';
+                $value = $params->get('task_state');
+
+                $query->where($where, $value);
+            }
+
+            if (is_array($column)) {
+                // 등록일
+                if (array_key_exists('reg_date', $column)) {
+                    $orderby = 'reg_date';
+                    $type = $column['reg_date'];
+                }
+                $query->orderBy($orderby, $type);
+
+                // 마감일
+                if (array_key_exists('deadline_date', $column)) {
+                    $orderby = 'deadline_date';
+                    $type = $column['deadline_date'];
+                }
+                $query->orderBy($orderby, $type);
+            }
+
+            return $query->paginate(5);
+        } catch (\Exception $e) {
+
+            return false;
         }
     }
 
@@ -74,6 +96,7 @@ class Task extends Model
                 'corp_name'         => $params->get('corp_name'),
                 'comment'           => $params->get('comment'),
                 'deadline_date'     => $params->get('deadline_date'),
+                'reg_date'          => \Carbon\Carbon::now(),
             ];
 
             return $this->insertGetId($rgInsert);
