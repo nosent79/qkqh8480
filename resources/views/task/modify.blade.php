@@ -66,17 +66,17 @@
                         <input class="form-control" id="corp_name" name="corp_name" type="text" placeholder="업체명" value="{{ $params->get('corp_name') }}">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label" for="">중요도</label>
-                    <div class="col-sm-6">
-                        <div class="radio">
-                            <label class="_tp"><input type="radio" name="priority" value="a" {{ getSelectedText($params->get('priority'), 'a', 'checked') }}>긴급</label>
-                            <label class="_tp"><input type="radio" name="priority" value="b" {{ getSelectedText($params->get('priority'), 'b', 'checked') }}>높음</label>
-                            <label class="_tp"><input type="radio" name="priority" value="c" {{ getSelectedText($params->get('priority'), 'c', 'checked') }}>중간</label>
-                            <label class="_tp"><input type="radio" name="priority" value="d" {{ getSelectedText($params->get('priority'), 'd', 'checked') }}>낮음</label>
-                        </div>
-                    </div>
-                </div>
+                {{--<div class="form-group">--}}
+                    {{--<label class="col-sm-3 control-label" for="">중요도</label>--}}
+                    {{--<div class="col-sm-6">--}}
+                        {{--<div class="radio">--}}
+                            {{--<label class="_tp"><input type="radio" name="priority" value="a" {{ getSelectedText($params->get('priority'), 'a', 'checked') }}>긴급</label>--}}
+                            {{--<label class="_tp"><input type="radio" name="priority" value="b" {{ getSelectedText($params->get('priority'), 'b', 'checked') }}>높음</label>--}}
+                            {{--<label class="_tp"><input type="radio" name="priority" value="c" {{ getSelectedText($params->get('priority'), 'c', 'checked') }}>중간</label>--}}
+                            {{--<label class="_tp"><input type="radio" name="priority" value="d" {{ getSelectedText($params->get('priority'), 'd', 'checked') }}>낮음</label>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
                 {{--
                 <div class="form-group">
                     <label class="col-sm-3 control-label" for="blog_url">Blog URL</label>
@@ -122,7 +122,7 @@
     <script src="/js/task.js"></script>
     <script>
         var type = "{{ $params->get('task_type') }}";
-        init(type);
+        _init(type);
 
         function cleanDatepicker() {        //datepicker 삭제 버튼
             var old_fn = $.datepicker._updateDatepicker;

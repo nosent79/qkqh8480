@@ -29,7 +29,7 @@ $(function() {
     });
 });
 
-function init(type)
+function _init(type)
 {
     setTaskType(type);
     setAddClassForLabel('task_type');

@@ -80,6 +80,11 @@ $app->group(['prefix' => 'task', 'middleware' => 'auth'], function () use ($app)
     $app->get('delete/{task_id:[0-9]+}', [
         'as' => 'task.delete', 'uses' => 'TaskController@delete', function ($task_id) {
     }]);
+
+    // 삭제된 항목 불러오기
+    $app->get('deleted_list', [
+        'as' => 'task.deleted_list', 'uses' => 'TaskController@deletedList', function () {
+    }]);
 });
 
 /*

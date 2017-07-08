@@ -1,6 +1,7 @@
 <ul class="nav navbar-nav">
     <li @if(isSelectedMenu("task/index", app('url')->current())) {{ "class=active" }} @endif><a href="{{ route('task.index') }}">홈</a></li>
     <li @if(isSelectedMenu("task/register", app('url')->current())) {{ "class=active" }} @endif><a href="{{ route('task.register') }}">태스크 등록</a></li>
+    <li @if(isSelectedMenu("task/deleted_list", app('url')->current())) {{ "class=active" }} @endif><a href="{{ route('task.deleted_list') }}">삭제 리스트</a></li>
 
 </ul>
 <ul class="nav navbar-nav navbar-right">

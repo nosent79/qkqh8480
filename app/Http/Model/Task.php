@@ -30,15 +30,30 @@ class Task extends Model
 //        return $this->get();
 //    }
 
-    public function getTask($params)
+    /**
+     * 삭제 제외한 태스크 가져오기
+     *
+     * @param $params
+     * @return mixed
+     */
+    public function getTaskExceptDeleted($params)
     {
         if ($params->has('orderby')) {
-            return $this->orderBy('deadline_date', 'desc')->get()->pluck('attributes');
+            return $this->where('task_state', '<>', 'd')->orderBy('deadline_date', 'desc')->get()->pluck('attributes');
         } else {
-            return $this->get()->pluck('attributes');
+            return $this->where('task_state', '<>', 'd')->get()->pluck('attributes');
         }
     }
 
+    /**
+     * 삭제된 태스크 가져오기
+     *
+     * @return mixed
+     */
+    public function getTaskDeleted()
+    {
+        return $this->where('task_state', 'd')->get()->pluck('attributes');
+    }
 
     /**
      * 태스크 등록
@@ -50,15 +65,15 @@ class Task extends Model
     {
         try {
             $rgInsert = [
-                'title'             => $params['title'],
-                'task_type'         => $params['task_type'],
-                'task_state'        => $params['task_state'],
-                'priority'          => $params['priority'],
-                'price'             => $params['price'],
-                'deposit_date'      => $params['deposit_date'],
-                'corp_name'         => $params['corp_name'],
-                'comment'           => $params['comment'],
-                'deadline_date'     => $params['deadline_date'],
+                'title'             => $params->get('title'),
+                'task_type'         => $params->get('task_type'),
+                'task_state'        => $params->get('task_state'),
+                'priority'          => $params->get('priority'),
+                'price'             => $params->get('price'),
+                'deposit_date'      => $params->get('deposit_date'),
+                'corp_name'         => $params->get('corp_name'),
+                'comment'           => $params->get('comment'),
+                'deadline_date'     => $params->get('deadline_date'),
             ];
 
             return $this->insertGetId($rgInsert);

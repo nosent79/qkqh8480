@@ -18,11 +18,36 @@
 
         <div class="">
             <p class="text-center">
-                <button class="btn btn-primary _orderby" type="button" data-href="{{ route('task.index', ['orderby' => 'deadline_date']) }}">
-                    정렬 - 마감기한
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-controls="">
+                    필터
                 </button>
+            <div class="collapse" id="filter">
+                <div class="well">
+                    <select class="form-control" id="orderby" name="orderby">
+                        <option value="deadline_date_desc">최신순</option>
+                        <option value="deadline_date_asc">과거순</option>
+                    </select>
+                    <select class="form-control" id="orderby_task_state" name="orderby">
+                        <option value="">전체</option>
+                        @foreach(config('constants.task')['task_state'] as $k => $v)
+                        <option value="{{ $k }}">{{ $v }}</option>
+                        @endforeach
+                    </select>
+                    <div class="pt10">
+                        <button class="btn btn-primary" type="button" data-href="{{ route('task.index', ['orderby' => 'deadline_date']) }}">조회</button>
+                    </div>
+                </div>
+            </div>
             </p>
         </div>
+
+        {{--<div class="">--}}
+            {{--<p class="text-center">--}}
+                {{--<button class="btn btn-primary _orderby" type="button" data-href="{{ route('task.index', ['orderby' => 'deadline_date']) }}">--}}
+                    {{--정렬 - 마감기한--}}
+                {{--</button>--}}
+            {{--</p>--}}
+        {{--</div>--}}
 
         {{-- 반복문 시작 --}}
         @forelse($tasks as $k => $v)

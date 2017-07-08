@@ -68,17 +68,17 @@
                         <input class="form-control" value="{{ $params->get('corp_name') }}" readonly="readonly">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label" for="">중요도</label>
-                    <div class="col-sm-6">
-                        <div class="radio">
-                            <label class="_tp"><input type="radio" value="a" {{ getSelectedText($params->get('priority'), 'a', 'checked') }} disabled="true">긴급</label>
-                            <label class="_tp"><input type="radio" value="b" {{ getSelectedText($params->get('priority'), 'b', 'checked') }} disabled="true">높음</label>
-                            <label class="_tp"><input type="radio" value="c" {{ getSelectedText($params->get('priority'), 'c', 'checked') }} disabled="true">중간</label>
-                            <label class="_tp"><input type="radio" value="d" {{ getSelectedText($params->get('priority'), 'd', 'checked') }} disabled="true">낮음</label>
-                        </div>
-                    </div>
-                </div>
+                {{--<div class="form-group">--}}
+                    {{--<label class="col-sm-3 control-label" for="">중요도</label>--}}
+                    {{--<div class="col-sm-6">--}}
+                        {{--<div class="radio">--}}
+                            {{--<label class="_tp"><input type="radio" value="a" {{ getSelectedText($params->get('priority'), 'a', 'checked') }} disabled="true">긴급</label>--}}
+                            {{--<label class="_tp"><input type="radio" value="b" {{ getSelectedText($params->get('priority'), 'b', 'checked') }} disabled="true">높음</label>--}}
+                            {{--<label class="_tp"><input type="radio" value="c" {{ getSelectedText($params->get('priority'), 'c', 'checked') }} disabled="true">중간</label>--}}
+                            {{--<label class="_tp"><input type="radio" value="d" {{ getSelectedText($params->get('priority'), 'd', 'checked') }} disabled="true">낮음</label>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
                 {{--
                 <div class="form-group">
                     <label class="col-sm-3 control-label" for="blog_url">Blog URL</label>

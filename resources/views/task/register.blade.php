@@ -30,12 +30,9 @@
                     <label class="col-sm-3 control-label" for="">상태</label>
                     <div class="col-sm-6">
                         <div class="radio">
-                            <label class="_ts"><input type="radio" name="task_state" value="w" checked>대&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기</label>
-                            <label class="_ts"><input type="radio" name="task_state" value="cw">컨펌대기</label>
-                            <label class="_ts"><input type="radio" name="task_state" value="dw">입금대기</label>
-                            <label class="_ts"><input type="radio" name="task_state" value="dc">입금완료</label>
-                            <label class="_ts"><input type="radio" name="task_state" value="wc">작업완료</label>
-                            <label class="_ts"><input type="radio" name="task_state" value="d">삭&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제</label>
+                            @foreach(config('constants.task')['task_state'] as $k => $v)
+                                <label class="_ts"><input type="radio" name="task_state" value="{{ $k }}">{{ $v }}</label>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -65,17 +62,18 @@
                         <input class="form-control" id="corp_name" name="corp_name" type="text" placeholder="업체명">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label" for="">중요도</label>
-                    <div class="col-sm-6">
-                        <div class="radio">
-                            <label class="_tp"><input type="radio" name="priority" value="a" checked>긴급</label>
-                            <label class="_tp"><input type="radio" name="priority" value="b">높음</label>
-                            <label class="_tp"><input type="radio" name="priority" value="c">중간</label>
-                            <label class="_tp"><input type="radio" name="priority" value="d">낮음</label>
-                        </div>
-                    </div>
-                </div>
+                {{-- 중요도 제거 2017-07-08 --}}
+                {{--<div class="form-group">--}}
+                    {{--<label class="col-sm-3 control-label" for="">중요도</label>--}}
+                    {{--<div class="col-sm-6">--}}
+                        {{--<div class="radio">--}}
+                            {{--<label class="_tp"><input type="radio" name="priority" value="a" checked>긴급</label>--}}
+                            {{--<label class="_tp"><input type="radio" name="priority" value="b">높음</label>--}}
+                            {{--<label class="_tp"><input type="radio" name="priority" value="c">중간</label>--}}
+                            {{--<label class="_tp"><input type="radio" name="priority" value="d">낮음</label>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
                 {{--
                 <div class="form-group">
                     <label class="col-sm-3 control-label" for="blog_url">Blog URL</label>
@@ -133,7 +131,18 @@
             }
         }
 
+        function init()
+        {
+            var task_state = $('input:radio[name=task_state]');
+
+            if (! task_state.is(':checked')) {
+                task_state.eq(0).attr("checked", true);
+            }
+        }
+
         $(document).ready(function() {
+            init();
+
             $("._task_type").click(function () {
                 var flag = $(this).children('input').val();
                 var type = $('input:radio[name=task_type]:input[value=' + flag + ']').attr("checked", true).val();
@@ -179,9 +188,19 @@
 
             $("#frmTask").submit(function() {
                 var task_type = $('input:radio[name=task_type]');
+                var task_state = $('input:radio[name=task_state]');
 
                 // 태스크 타입 체크
                 if (! task_type.is(':checked')) {
+                    alert('구분을 선택하세요.');
+
+                    return false;
+                }
+
+                // 상태 체크
+                if (! task_state.is(':checked')) {
+                    alert('상태를 체크하세요');
+
                     return false;
                 }
 

@@ -31,7 +31,7 @@ class LoginController extends Controller
      */
     public function login()
     {
-        if ($this->request->session()->get('user_id')) {
+        if ($this->request->session()->has('user_id')) {
 
             return redirect()->route('task.index');
         }

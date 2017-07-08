@@ -34,8 +34,8 @@ class TaskController
     {
         $params = collect($this->request->all());
 
-        $tasks = $this->task->getTask($params);
-dd($tasks);
+        $tasks = $this->task->getTaskExceptDeleted($params);
+
         return view('task.index', [
             'params'    => $params,
             'tasks'     => $tasks,
@@ -91,7 +91,7 @@ dd($tasks);
     public function registerOK()
     {
         try {
-            $params = $this->request->all();
+            $params = collect($this->request->all());
 
             $rstTask = $this->task->setTask($params);
             if ($rstTask === false) {
@@ -163,6 +163,30 @@ dd($tasks);
             echo $e;
         } catch (\Exception $e) {
             Log::error(__METHOD__ . $e);
+        }
+    }
+
+    /**
+     * 삭제된 항목 불러오기
+     *
+     * @return bool|\Illuminate\View\View
+     */
+    public function deletedList()
+    {
+        try {
+            $params = collect($this->request->all());
+            $tasks = $this->task->getTaskDeleted($params);
+
+            return view('task.deleted_list', [
+                'params'    => $params,
+                'tasks'     => $tasks,
+            ]);
+        } catch (CustomException $e) {
+            echo $e;
+        } catch (\Exception $e) {
+            Log::error(__METHOD__ . $e);
+
+            return false;
         }
     }
 
