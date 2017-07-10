@@ -216,4 +216,26 @@ class TaskController
             Log::error(__METHOD__ . $e);
         }
     }
+
+    /**
+     * 통계
+     */
+    public function statistics()
+    {
+        try {
+            $date = \Carbon\Carbon::today();
+
+            $params = collect($this->request->all());
+            $params->put('s_date', fnGetFirstDay($date));
+            $params->put('e_date', $date->toDateString());
+
+            return view('task.statistics', [
+                'params'    => $params,
+            ]);
+        } catch (CustomException $e) {
+            echo $e;
+        } catch (\Exception $e) {
+            Log::error(__METHOD__ . $e);
+        }
+    }
 }

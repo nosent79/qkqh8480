@@ -85,6 +85,11 @@ $app->group(['prefix' => 'task', 'middleware' => 'auth'], function () use ($app)
     $app->get('deleted_list', [
         'as' => 'task.deleted_list', 'uses' => 'TaskController@deletedList', function () {
     }]);
+
+    // 통계
+    $app->get('statistics', [
+        'as' => 'task.statistics', 'uses' => 'TaskController@statistics', function () {
+    }]);
 });
 
 /*

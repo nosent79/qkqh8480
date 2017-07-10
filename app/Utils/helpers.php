@@ -64,6 +64,32 @@
     }
 
     /**
+     * 현재 달의 초일 구하기
+     */
+    if (! function_exists('fnGetFirstDay')) {
+        function fnGetFirstDay($date, $add_month = 0)
+        {
+            $date = $date->addMonth($add_month);
+            $first_date = date('Y-m-d', mktime(0,0,0,$date->month, 1, $date->year));
+
+            return $first_date;
+        }
+    }
+
+    /**
+     * 현재 달의 말일 구하기
+     */
+    if (! function_exists('fnGetLastDay')) {
+        function fnGetLastDay($date, $add_month = 0)
+        {
+            $date = $date->addMonth($add_month);
+            $last_date = date('Y-m-d', mktime(0,0,0,$date->month+1, 0, $date->year));
+
+            return $last_date;
+        }
+    }
+
+    /**
      * 날짜 포맷
      */
     if (! function_exists('fnParseDate')) {
