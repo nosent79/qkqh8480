@@ -42,7 +42,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label" for="deadline_date">마감기한</label>
                     <div class="col-sm-6">
-                        <input class="form-control" type="text" value="{{ fnParseDate($params->get('deadline_date')) }}" readonly="readonly">
+                        <input class="form-control" type="text" value="{{ $params->get('deadline_date') }}" readonly="readonly">
                     </div>
                 </div>
                 <div id="task_price" style="display:none">
@@ -55,7 +55,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="deposit_date">입금일자</label>
                         <div class="col-sm-6">
-                            <input class="form-control" type="text" value="{{ fnParseDate($params->get('deposit_date')) }}" readonly="readonly">
+                            <input class="form-control" type="text" value="{{ $params->get('deposit_date') }}" readonly="readonly">
                         </div>
                     </div>
                 </div>

@@ -46,21 +46,29 @@
         @forelse($tasks as $k => $v)
             @collect($v)
                 <div class="thumbnail">
+                    <a href="{{ route('task.view', ['task_id' => $v->get('task_id') ]) }}">
                     <div>
                         <div class="text-left" style="float:left">
                             <span class="label label-default">{{ $v->get('deadline_date') }}</span>
                             <span class="label label-default">{{ $v->get('corp_name') }}</span>
+                            @if (in_array($v->get('task_state'), ['w', 'dc', 'wc']))
                             <span class="label label-default">{{ config('constants.task')['task_state'][$v->get('task_state')] }}</span>
+                            @elseif ($v->get('task_state') === 'cw')
+                            <span class="label label-primary">{{ config('constants.task')['task_state'][$v->get('task_state')] }}</span>
+                            @elseif ($v->get('task_state') === 'dw')
+                            <span class="label label-warning">{{ config('constants.task')['task_state'][$v->get('task_state')] }}</span>
+                            @endif
                         </div>
                         <div class="text-right">
-                            @if (fnDiffRemainDays($v->get('deadline_date')) <= 3)
-                                <span class="label label-danger">{{ fnDiffRemainDays($v->get('deadline_date')) }}</span>
+                            @if (fnDiffRemainDays($v->get('deadline_date'))['days'] < 0)
+                                <span class="label label-default">{{ fnDiffRemainDays($v->get('deadline_date'))['msg'] }}</span>
+                            @elseif (fnDiffRemainDays($v->get('deadline_date'))['days'] <= 3)
+                                <span class="label label-danger">{{ fnDiffRemainDays($v->get('deadline_date'))['msg'] }}</span>
                             @else
-                                <span class="label label-success">{{ fnDiffRemainDays($v->get('deadline_date')) }}</span>
+                                <span class="label label-success">{{ fnDiffRemainDays($v->get('deadline_date'))['msg'] }}</span>
                             @endif
                         </div>
                     </div>
-                    <a href="{{ route('task.view', ['task_id' => $v->get('task_id') ]) }}">
                     {{ fnShorten($v->get('title'), 40, '...') }}
                     </a>
                 </div>

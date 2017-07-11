@@ -137,11 +137,21 @@
     if (! function_exists('fnDiffRemainDays')) {
         function fnDiffRemainDays($date)
         {
-            $date = fnParseDateToCarbon($date);
+            $result = [];
 
+            $date = fnParseDateToCarbon($date);
             $dt = new \Carbon\Carbon();
             $today = $dt->today();
-            $result = $today->diffInDays($date, false);
+            $days = $today->diffInDays($date, false);
+
+            if ($days === 0) {
+                $result['msg'] = "D-Day";
+            } elseif ($days > 1) {
+                $result['msg'] = "D-" . $days;
+            } else {
+                $result['msg'] = "D+" . abs($days);
+            }
+            $result['days'] = $days;
 
             return $result;
         }

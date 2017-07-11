@@ -111,7 +111,6 @@ class Task extends Model
                 'title'             => $params->get('title'),
                 'task_type'         => $params->get('task_type'),
                 'task_state'        => $params->get('task_state'),
-                'priority'          => $params->get('priority'),
                 'price'             => $params->get('price'),
                 'deposit_date'      => $params->get('deposit_date'),
                 'corp_name'         => $params->get('corp_name'),
