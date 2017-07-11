@@ -3,7 +3,7 @@
     <li @if(isSelectedMenu("task/register", app('url')->current())) {{ "class=active" }} @endif><a href="{{ route('task.register') }}">태스크 등록</a></li>
     <li @if(isSelectedMenu("task/statistics", app('url')->current())) {{ "class=active" }} @endif><a href="{{ route('task.statistics') }}">통계</a></li>
     <li @if(isSelectedMenu("task/deleted_list", app('url')->current())) {{ "class=active" }} @endif><a href="{{ route('task.deleted_list') }}">삭제 리스트</a></li>
-
+    <li @if(isSelectedMenu("memo/register", app('url')->current())) {{ "class=active" }} @endif><a href="{{ route('memo.register') }}">메모 등록</a></li>
 </ul>
 <ul class="nav navbar-nav navbar-right">
     @if (app('session')->has('user_id'))

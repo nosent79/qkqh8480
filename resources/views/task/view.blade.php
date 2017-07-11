@@ -33,12 +33,9 @@
                     <label class="col-sm-3 control-label" for="">상태</label>
                     <div class="col-sm-6">
                         <div class="radio">
-                            <label class="_ts"><input type="radio" name="task_state" value="w" {{ getSelectedText($params->get('task_state'), 'w', 'checked') }} disabled="true">대&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기</label>
-                            <label class="_ts"><input type="radio" name="task_state" value="cw" {{ getSelectedText($params->get('task_state'), 'cw', 'checked') }} disabled="true">컨펌대기</label>
-                            <label class="_ts"><input type="radio" name="task_state" value="dw" {{ getSelectedText($params->get('task_state'), 'dw', 'checked') }} disabled="true">입금대기</label>
-                            <label class="_ts"><input type="radio" name="task_state" value="dc" {{ getSelectedText($params->get('task_state'), 'dc', 'checked') }} disabled="true">입금완료</label>
-                            <label class="_ts"><input type="radio" name="task_state" value="wc" {{ getSelectedText($params->get('task_state'), 'wc', 'checked') }} disabled="true">작업완료</label>
-                            <label class="_ts"><input type="radio" name="task_state" value="d" {{ getSelectedText($params->get('task_state'), 'd', 'checked') }} disabled="true">삭&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제</label>
+                            @foreach(config('constants.task')['task_state'] as $k => $v)
+                                <label class="_ts"><input type="radio" name="task_state" value="{{ $k }}" {{ getSelectedText($params->get('task_state'), $k, 'checked') }} disabled="true">{{ $v }}</label>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -105,6 +102,7 @@
                         <button class="btn btn-danger _btn_delete" type="button" data-href="{{ route('task.delete', ['task_id' => $params->get('task_id')]) }}">삭제 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
                         <button class="btn btn-warning _btn_modify" type="button" data-href="{{ route('task.modify', ['task_id' => $params->get('task_id')]) }}">수정 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
                     @endif
+                        <button class="btn btn-primary _btn_register" type="button" data-href="{{ route('task.register') }}">신규 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
                         <button class="btn btn-default _btn_list" type="button" data-href="{{ route('task.index') }}">리스트 <span class="glyphicon glyphicon-list" aria-hidden="true"></span></button>
                     </div>
                 </div>
@@ -123,6 +121,6 @@
     <script src="/js/task.js"></script>
     <script>
         var type = "{{ $params->get('task_type') }}";
-        init(type);
+        _init(type);
     </script>
 @stop

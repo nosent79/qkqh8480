@@ -45,6 +45,9 @@ $app->group(['prefix' => 'auth'], function () use ($app) {
     ]);
 });
 
+/**
+ * 메모 등록
+ */
 $app->group(['prefix' => 'task', 'middleware' => 'auth'], function () use ($app) {
     // 업무 리스트
     $app->get('index', [
@@ -92,6 +95,23 @@ $app->group(['prefix' => 'task', 'middleware' => 'auth'], function () use ($app)
     }]);
 });
 
+/**
+ * 메모 등록
+ */
+$app->group(['prefix' => 'memo'], function () use ($app) {
+    $app->get('view', [
+        'as' => 'memo.view', 'uses' => 'MemoController@view'
+    ]);
+
+    $app->get('register', [
+        'as' => 'memo.register', 'uses' => 'MemoController@register'
+    ]);
+
+    $app->post('register_ok', [
+        'as' => 'memo.register_ok', 'uses' => 'MemoController@registerOK'
+    ]);
+});
+
 /*
  * lumen 과 laravel5.x exception handler 비교
     // lumen
@@ -113,6 +133,13 @@ $app->group(['prefix' => 'task', 'middleware' => 'auth'], function () use ($app)
         }]);
     });
  */
+
+/**
+ * 테스트 아이디 등록
+ */
+$app->get('initMember', [
+    'as' => 'initMember', 'uses' => 'MemberController@initMember'
+]);
 
 
 /*

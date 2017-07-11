@@ -31,12 +31,9 @@
                     <label class="col-sm-3 control-label" for="">상태</label>
                     <div class="col-sm-6">
                         <div class="radio">
-                            <label class="_ts"><input type="radio" name="task_state" value="w" {{ getSelectedText($params->get('task_state'), 'w', 'checked') }}>대&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;기</label>
-                            <label class="_ts"><input type="radio" name="task_state" value="cw" {{ getSelectedText($params->get('task_state'), 'cw', 'checked') }}>컨펌대기</label>
-                            <label class="_ts"><input type="radio" name="task_state" value="dw" {{ getSelectedText($params->get('task_state'), 'dw', 'checked') }}>입금대기</label>
-                            <label class="_ts"><input type="radio" name="task_state" value="dc" {{ getSelectedText($params->get('task_state'), 'dc', 'checked') }}>입금완료</label>
-                            <label class="_ts"><input type="radio" name="task_state" value="wc" {{ getSelectedText($params->get('task_state'), 'wc', 'checked') }}>작업완료</label>
-                            <label class="_ts"><input type="radio" name="task_state" value="d" {{ getSelectedText($params->get('task_state'), 'd', 'checked') }}>삭&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제</label>
+                            @foreach(config('constants.task')['task_state'] as $k => $v)
+                                <label class="_ts"><input type="radio" name="task_state" value="{{ $k }}" {{ getSelectedText($params->get('task_state'), $k, 'checked') }}>{{ $v }}</label>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -120,57 +117,12 @@
 @section('add_js')
     <script src="/js/validator.js"></script>
     <script src="/js/task.js"></script>
+    <script src="/js/datepicker.js"></script>
     <script>
         var type = "{{ $params->get('task_type') }}";
         _init(type);
 
-        function cleanDatepicker() {        //datepicker 삭제 버튼
-            var old_fn = $.datepicker._updateDatepicker;
-
-            $.datepicker._updateDatepicker = function(inst) {
-                old_fn.call(this, inst);
-
-                var buttonPane = $(this).datepicker("widget").find(".ui-datepicker-buttonpane");
-
-                $("<button type='button' class='ui-datepicker-clean ui-state-default ui-priority-primary ui-corner-all'>clear</button>").appendTo(buttonPane).click(function(ev) {
-                    $.datepicker._clearDate(inst.input);
-                }) ;
-            }
-        }
-
-        $(document).ready(function() {
-        });
-
         $(function() {
-            cleanDatepicker();
-
-            $("._datepicker").datepicker({
-                dateFormat: 'yy-mm-dd'
-            });
-
-            $.datepicker.regional['ko'] = {
-                closeText: '닫기',
-                showButtonPanel: true, // 캘린더 하단에 버튼 패널을 표시한다.
-                prevText: '이전',
-                nextText: '다음',
-                monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-                monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
-                dayNames: ['일','월','화','수','목','금','토'],
-                dayNamesShort: ['일','월','화','수','목','금','토'],
-                dayNamesMin: ['일','월','화','수','목','금','토'],
-                weekHeader: 'Wk',
-                dateFormat: 'yy-mm-dd',
-                firstDay: 0,
-                isRTL: false,
-                changeMonth: true,
-                changeYear: true,
-                showMonthAfterYear: true,
-                yearRange: 'c-99:c+99',
-                yearSuffix: ''
-            };
-
-            $.datepicker.setDefaults($.datepicker.regional['ko']);
-
             $("#frmTask").submit(function() {
                 var task_type = $('input:radio[name=task_type]');
 
@@ -200,18 +152,5 @@
 
             return dayRegExp.test(date);
         }
-
-        //        $.extend({
-        //            checkDateFormat : function(date) {
-        //                var df = /[0-9]{4}-[0-9]{2}-[0-9]{2}/;
-        //                var checkdate = true;
-        //                if (date.match(df) != null) {
-        //                    checkdate = false;
-        //                }
-        //
-        //                return checkdate;
-        //            }
-        //        });
-
     </script>
 @stop

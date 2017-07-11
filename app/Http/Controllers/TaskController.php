@@ -226,11 +226,15 @@ class TaskController
             $date = \Carbon\Carbon::today();
 
             $params = collect($this->request->all());
-            $params->put('s_date', fnGetFirstDay($date));
-            $params->put('e_date', $date->toDateString());
+            $params->put('s_date', $params->get('s_date', fnGetFirstDay($date)));
+            $params->put('e_date', $params->get('e_date', $date->toDateString()));
+            $params->put('task_state', $params->get('task_state', 'dc'));
+
+            $tasks = $this->task->getTaskStatistics($params);
 
             return view('task.statistics', [
                 'params'    => $params,
+                'tasks'     => $tasks,
             ]);
         } catch (CustomException $e) {
             echo $e;

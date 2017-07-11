@@ -87,7 +87,11 @@ class MemberController extends Controller
      */
     public function initMember()
     {
-        $params = collect(['user_id'=>'jerry', 'user_pwd'=>'jerry', 'user_email' => 'nosent79@gmail.com']);
+        if ($this->member->where('user_id', 'jerry')->get()->pluck('attributes')->count()) {
+            fnMoveUrl('이미 등록되어있습니다', 1, route('/'));
+        }
+
+        $params = collect(['user_id'=>'jerry', 'user_name' => '최진욱', 'user_pwd'=>'jerry', 'user_email' => 'nosent79@gmail.com']);
         $result = $this->member->setMember($params);
 
         echo ($result > 0) ? "성공" : "실패";

@@ -3,58 +3,80 @@
     <div class="container">
         @include('default.nav')
 
-        {{ var_dump($params) }}
-        {{--<div class="collapse" id="filter">--}}
-            {{--<form id="frmSearch" name="frmSearch" class="form-horizontal" method="get" action="{{ route('task.index') }}">--}}
-                {{--<div class="well">--}}
-                    {{--<select class="form-control" name="orderby[reg_date]">--}}
-                    {{--<option value="">전체</option>--}}
-                    {{--<option value="asc">과거기준</option>--}}
-                    {{--<option value="desc"></option>--}}
-                    {{--</select>--}}
-                    {{--<select class="form-control" name="orderby[deadline_date]">--}}
-                        {{--<option value="desc">마감</option>--}}
-                        {{--<option value="asc">마감임박</option>--}}
-                    {{--</select>--}}
-                    {{--<select class="form-control" name="task_state">--}}
-                        {{--<option value="">전체</option>--}}
-                        {{--@foreach(config('constants.task')['task_state'] as $k => $v)--}}
-                            {{--<option value="{{ $k }}" {{ getSelectedText($k, $params->get('task_state'), 'selected') }}>{{ $v }}</option>--}}
-                        {{--@endforeach--}}
-                    {{--</select>--}}
-                    {{--<div class="pt10">--}}
-                        {{--<button class="btn btn-primary" type="submit">조회</button>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</form>--}}
+        <div class="">
+            <p class="text-right">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-controls="">
+                    필터
+                </button>
+            </p>
+            <div class="collapse" id="filter">
 
-        {{-- 반복문 시작 --}}
-        {{--@forelse($tasks as $k => $v)--}}
-            {{--@collect($v)--}}
+                <div class="well">
+                    <form id="frmSearch" name="frmSearch" class="form-horizontal" method="get" action="{{ route('task.statistics') }}">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="s_date">시작일자</label>
+                            <div class="col-sm-6">
+                                <input class="form-control _datepicker" id="s_date" name="s_date" type="text" placeholder="시작일자" value="{{ $params->get('s_date') }}">
+                            </div>
+                            <label class="col-sm-3 control-label" for="e_date">종료일자</label>
+                            <div class="col-sm-6">
+                                <input class="form-control _datepicker" id="e_date" name="e_date" type="text" placeholder="종료일자" value="{{ $params->get('e_date') }}">
+                            </div>
+                        </div>
 
-            {{--<div class="thumbnail">--}}
-                {{--<a href="{{ route('task.view', ['task_id' => $v->get('task_id') ]) }}">--}}
-                    {{--<p class="">{{ $v->get('title') }}</p>--}}
-                {{--</a>--}}
-            {{--</div>--}}
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="">상태</label>
+                            <div class="col-sm-6">
+                                <div class="radio">
+                                    <label class="_ts"><input type="radio" name="task_state" value="all" {{ getSelectedText($params->get('task_state'), 'all', 'checked') }}>전체</label>
+                                    @foreach(config('constants.task')['task_state'] as $k => $v)
+                                        <label class="_ts"><input type="radio" name="task_state" value="{{ $k }}" {{ getSelectedText($params->get('task_state'), $k, 'checked') }}>{{ $v }}</label>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
 
-        {{--@empty--}}
-            {{--<div class="thumbnail">--}}
-                {{--<span>--}}
-                    {{--등록된 태스크가 없습니다. 첫 등록하실래요? <a href="{{ route('task.register') }}">GO</a>--}}
-                {{--</span>--}}
-            {{--</div>--}}
-        {{--@endforelse--}}
+                        <div class="form-group">
+                            <div class="col-sm-12 text-center">
+                                <button class="btn btn-primary" type="submit">조회</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
-    </div>
+            {{--반복문 시작--}}
+            <div class="well text-right">
+                <span>{{ "총 ". $tasks->count() . "건, 총 " . number_format($tasks->sum('price')) . "원 입니다." }}</span>
+            </div>
+
+            @forelse($tasks as $k => $v)
+                @collect($v)
+                <div class="thumbnail">
+                    {{ fnParseDateToKor($v->get('deposit_date')) }} <br />
+                    {{ $v->get('corp_name') }} <br />
+                    <span class="">
+                        {{ $v->get('title') }} <br />
+                    </span>
+                    {{ number_format($v->get('price')) }}
+                </div>
+            @empty
+            @endforelse
+
+            <div class="text-center">
+                {!! $tasks->appends(['task_state' => $params->get('task_state')])->render() !!}
+            </div>
+        </div>
 @stop
 
 @section('css')
     @parent
 
     <link href="/css/custom.css" rel="stylesheet">
+    <link href="/css/task.css" rel="stylesheet">
 @stop
 
 @section('add_js')
     <script src="/js/task.js"></script>
+    <script src="/js/datepicker.js"></script>
 @stop

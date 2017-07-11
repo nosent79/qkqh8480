@@ -4,22 +4,19 @@
         @include('default.nav')
         <div class="">
             <p class="text-center">
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#memo" aria-expanded="false" aria-controls="">
+                <button class="btn btn-default _btn_memo" type="button" data-toggle="collapse" data-target="#memo" aria-expanded="false" aria-controls="">
                     메모보기
                 </button>
-            <div class="collapse" id="memo">
-                <div class="well">
-                    여기는 메모가 들어갈 공간<br />
-                </div>
-            </div>
-            </p>
-        </div>
-
-        <div class="">
-            <p class="text-center">
                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-controls="">
                     필터
                 </button>
+            </p>
+            <div class="collapse" id="memo">
+                <div class="well _memo"></div>
+            </div>
+        </div>
+
+        <div class="">
             <div class="collapse" id="filter">
                 <form id="frmSearch" name="frmSearch" class="form-horizontal" method="get" action="{{ route('task.index') }}">
                 <div class="well">
@@ -38,24 +35,25 @@
                         <option value="{{ $k }}" {{ getSelectedText($k, $params->get('task_state'), 'selected') }}>{{ $v }}</option>
                         @endforeach
                     </select>
-                    <div class="pt10">
+                    <div class="pt10 text-right">
                         <button class="btn btn-primary" type="submit">조회</button>
                     </div>
                 </div>
                 </form>
             </div>
-            </p>
         </div>
-
         {{-- 반복문 시작 --}}
         @forelse($tasks as $k => $v)
             @collect($v)
-
-            <div class="thumbnail">
-                <a href="{{ route('task.view', ['task_id' => $v->get('task_id') ]) }}">
-                    <p class="">{{ $v->get('title') }}</p>
-                </a>
-            </div>
+                <div class="thumbnail">
+                    <a href="{{ route('task.view', ['task_id' => $v->get('task_id') ]) }}">
+                    {{ $v->get('corp_name') }}<br />
+                    {{ $v->get('deadline_date') }}<br />
+                    {{ $v->get('reg_date') }}<br />
+                    {{ config('constants.task')['task_state'][$v->get('task_state')] }}
+                    <{{ $v->get('title') }}
+                    </a>
+                </div>
 
         @empty
             <div class="thumbnail">
@@ -64,9 +62,10 @@
                 </span>
             </div>
         @endforelse
-        {{--<div class="thumbnail">--}}
-            {{--<p class="">가나다라마가나다라마가나다라마가나다라마가나다라마가나다라마</p>--}}
-        {{--</div>--}}
+
+        <div class="text-center">
+            {!! $tasks->render() !!}
+        </div>
     </div>
 @stop
 
@@ -78,4 +77,45 @@
 
 @section('add_js')
     <script src="/js/task.js"></script>
+    <script>
+        // 브라우저 버전 체크
+        function checkBrowserType() {
+            var agt = navigator.userAgent.toLowerCase();
+
+            if (agt.indexOf("msie") != -1) {
+                var trident = navigator.userAgent.match(/Trident\/(\d.\d)/i);
+
+                if(trident == null){
+                    return false;
+                } else if(trident[1] != "4.0") {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return true;
+            }
+        }
+        $("._btn_memo").click(function () {
+            var bExpanded = $(this).attr("aria-expanded");
+
+            if (bExpanded === "false") {
+                var url = "{{ route('memo.view') }}";
+                $.ajax({
+                    type: 'get',
+                    dataType: 'text',
+                    url: url,
+                    data: {},
+                    success: function (data) {
+                        var json = JSON.parse(data);
+                        console.log(json.memo);
+                        $("._memo").html(json.memo);
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+        });
+    </script>
 @stop

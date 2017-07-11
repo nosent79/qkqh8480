@@ -14,7 +14,7 @@ class Task extends Model
 {
     protected $table = 'tasks';
     protected $primaryKey = 'task_id';
-    protected $dates = ['deadline_date', 'del_date', 'reg_date', 'upd_date'];
+    protected $dates = ['del_date', 'reg_date', 'upd_date'];
     protected $fillable = [
                                 'title', 'task_type', 'task_state', 'priority',
                                 'price', 'deposit_date', 'corp_name', 'comment', 'deadline_date'
@@ -75,6 +75,22 @@ class Task extends Model
     public function getTaskDeleted()
     {
         return $this->where('task_state', 'd')->get()->pluck('attributes');
+    }
+
+    /**
+     * 통계
+     */
+    public function getTaskStatistics($params)
+    {
+        $query = $this
+                    ->where('deposit_date', '<=', $params->get('e_date'))
+                    ->where('deposit_date', '>=', $params->get('s_date'));
+
+        if ($params->get('task_state') !== 'all') {
+            $query->where('task_state', $params->get('task_state'));
+        }
+
+        return $query->paginate(5);
     }
 
     /**

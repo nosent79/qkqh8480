@@ -4,7 +4,12 @@
 // $(document).ready(function () {
 $(function() {
     $("._btn_list").click(function () {
-        var url = $("._btn_list").data('href');
+        var url = $(this).data('href');
+        location.href = url;
+    });
+
+    $("._btn_register").click(function () {
+        var url = $(this).data('href');
         location.href = url;
     });
 
