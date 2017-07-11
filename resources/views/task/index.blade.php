@@ -48,8 +48,8 @@
                 <div class="thumbnail">
                     <div>
                         <div class="text-left" style="float:left">
-                            <span class="label label-default">{{ $v->get('corp_name') }}</span>
                             <span class="label label-default">{{ $v->get('deadline_date') }}</span>
+                            <span class="label label-default">{{ $v->get('corp_name') }}</span>
                             <span class="label label-default">{{ config('constants.task')['task_state'][$v->get('task_state')] }}</span>
                         </div>
                         <div class="text-right">
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                     <a href="{{ route('task.view', ['task_id' => $v->get('task_id') ]) }}">
-                    {{ $v->get('title') }}
+                    {{ fnShorten($v->get('title'), 40, '...') }}
                     </a>
                 </div>
 
