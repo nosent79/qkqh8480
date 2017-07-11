@@ -59,7 +59,7 @@
                 return $string;
             }
 
-            return substr($string, 0, $limit) . $suffix;
+            return mb_substr($string, 0, $limit) . $suffix;
         }
     }
 
@@ -99,7 +99,8 @@
             $replacement='${1}-${2}-${3}';
             $result = preg_replace($pattern, $replacement, $date);
 
-            if(empty($result)){
+            if (empty($result)) {
+
                 return "";
             }
 
@@ -125,6 +126,35 @@
             if(empty($result)){
                 return "";
             }
+
+            return $result;
+        }
+    }
+
+    /**
+     * 날짜 비교 (남은 일 수)
+     */
+    if (! function_exists('fnDiffRemainDays')) {
+        function fnDiffRemainDays($date)
+        {
+            $date = fnParseDateToCarbon($date);
+
+            $dt = new \Carbon\Carbon();
+            $today = $dt->today();
+            $result = $today->diffInDays($date, false);
+
+            return $result;
+        }
+    }
+
+    /**
+     * YYYY-MM-DD to Carbon Object
+     */
+    if (! function_exists('fnParseDateToCarbon')) {
+        function fnParseDateToCarbon($date)
+        {
+            $date = fnParseDate($date);
+            $result = \Carbon\Carbon::parse($date);
 
             return $result;
         }

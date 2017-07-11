@@ -14,3 +14,7 @@ body {
 .mb10 {
     margin-bottom: 10px;
 }
+
+.bold {
+    font-weight:bold;
+}

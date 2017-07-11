@@ -14,19 +14,19 @@
                 <div class="well">
                     <form id="frmSearch" name="frmSearch" class="form-horizontal" method="get" action="{{ route('task.statistics') }}">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label" for="s_date">시작일자</label>
-                            <div class="col-sm-6">
+                            <label class="col-sm-3 col-lg-1 control-label" for="s_date">시작일자</label>
+                            <div class="col-sm-6 col-lg-5">
                                 <input class="form-control _datepicker" id="s_date" name="s_date" type="text" placeholder="시작일자" value="{{ $params->get('s_date') }}">
                             </div>
-                            <label class="col-sm-3 control-label" for="e_date">종료일자</label>
-                            <div class="col-sm-6">
+                            <label class="col-sm-3 col-lg-1 control-label" for="e_date">종료일자</label>
+                            <div class="col-sm-6 col-lg-5">
                                 <input class="form-control _datepicker" id="e_date" name="e_date" type="text" placeholder="종료일자" value="{{ $params->get('e_date') }}">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label" for="">상태</label>
-                            <div class="col-sm-6">
+                            <label class="col-sm-3 col-lg-1 control-label" for="">상태</label>
+                            <div class="col-sm-6 col-lg-11">
                                 <div class="radio">
                                     <label class="_ts"><input type="radio" name="task_state" value="all" {{ getSelectedText($params->get('task_state'), 'all', 'checked') }}>전체</label>
                                     @foreach(config('constants.task')['task_state'] as $k => $v)
@@ -53,12 +53,18 @@
             @forelse($tasks as $k => $v)
                 @collect($v)
                 <div class="thumbnail">
-                    {{ fnParseDateToKor($v->get('deposit_date')) }} <br />
-                    {{ $v->get('corp_name') }} <br />
+                    <div>
+                        <div class="text-left" style="float:left">
+                            <span class="label label-default">{{ $v->get('deposit_date') }}</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="label label-default">{{ $v->get('corp_name') }}</span>
+                        </div>
+                    </div>
                     <span class="">
-                        {{ $v->get('title') }} <br />
+                        {{ fnShorten($v->get('title'), 40, '...') }} <br />
                     </span>
-                    {{ number_format($v->get('price')) }}
+                    <div class="text-right">입금액: <span class="bold">{{ number_format($v->get('price')) }}</span> 원</div>
                 </div>
             @empty
             @endforelse

@@ -27,7 +27,7 @@
                     {{--</select>--}}
                     <select class="form-control" name="orderby[deadline_date]">
                         {{--<option value="desc">마감</option>--}}
-                        <option value="asc">마감임박</option>
+                        <option value="asc">마감임박순</option>
                     </select>
                     <select class="form-control" name="task_state">
                         <option value="">전체</option>
@@ -46,12 +46,22 @@
         @forelse($tasks as $k => $v)
             @collect($v)
                 <div class="thumbnail">
+                    <div>
+                        <div class="text-left" style="float:left">
+                            <span class="label label-default">{{ $v->get('corp_name') }}</span>
+                            <span class="label label-default">{{ $v->get('deadline_date') }}</span>
+                            <span class="label label-default">{{ config('constants.task')['task_state'][$v->get('task_state')] }}</span>
+                        </div>
+                        <div class="text-right">
+                            @if (fnDiffRemainDays($v->get('deadline_date')) <= 3)
+                                <span class="label label-danger">{{ fnDiffRemainDays($v->get('deadline_date')) }}</span>
+                            @else
+                                <span class="label label-success">{{ fnDiffRemainDays($v->get('deadline_date')) }}</span>
+                            @endif
+                        </div>
+                    </div>
                     <a href="{{ route('task.view', ['task_id' => $v->get('task_id') ]) }}">
-                    {{ $v->get('corp_name') }}<br />
-                    {{ $v->get('deadline_date') }}<br />
-                    {{ $v->get('reg_date') }}<br />
-                    {{ config('constants.task')['task_state'][$v->get('task_state')] }}
-                    <{{ $v->get('title') }}
+                    {{ $v->get('title') }}
                     </a>
                 </div>
 

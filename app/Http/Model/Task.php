@@ -31,8 +31,6 @@ class Task extends Model
     {
         try {
             $column = $params->get('orderby');
-            $orderby = 'deadline_date';
-            $type = 'asc';
 
             $query = $this->where('task_state', '<>', 'd');
 
@@ -41,7 +39,7 @@ class Task extends Model
                 $where = 'task_state';
                 $value = $params->get('task_state');
 
-                $query->where($where, $value);
+                $query->where($where, 'like', $value.'%');
             }
 
             if (is_array($column)) {
@@ -49,14 +47,21 @@ class Task extends Model
                 if (array_key_exists('reg_date', $column)) {
                     $orderby = 'reg_date';
                     $type = $column['reg_date'];
+
+                    $query->orderBy($orderby, $type);
                 }
-                $query->orderBy($orderby, $type);
 
                 // 마감일
                 if (array_key_exists('deadline_date', $column)) {
                     $orderby = 'deadline_date';
                     $type = $column['deadline_date'];
+
+                    $query->orderBy($orderby, $type);
                 }
+            } else {
+                $orderby = 'deadline_date';
+                $type = 'asc';
+
                 $query->orderBy($orderby, $type);
             }
 
