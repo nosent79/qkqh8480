@@ -83,15 +83,68 @@ class MemberController extends Controller
     }
 
     /**
+     * 회원정보 변경 화면
+     */
+    public function modifyMemberInfo()
+    {
+
+        return view('member.modify_info');
+    }
+
+    /**
+     * 회원정보 변경 화면
+     */
+    public function modifyMemberInfoOK()
+    {
+        try {
+            $params = collect($this->request->all());
+            $params->put('user_id', app('session')->get('user_id'));
+
+            $validator = Validator::make($this->request->all(), [
+                'old_pwd'       => 'required',
+                'user_name'     => 'required',
+                'user_email'    => 'required|email'
+            ]);
+
+            if ($validator->fails()) {
+                fnMoveUrl('부정확한 정보가 입력되었습니다.', 1, route('member.modify_info'));
+            }
+
+            // 기존 비밀번호 체크
+            $rstMember = $this->member->comparePassword($params);
+            if ($rstMember === false) {
+                throw new CustomException('비밀번호가 정확하지 않습니다.', '1', route('member.modify_info'));
+            }
+
+            $rstMember = $this->member->modifyMemberInfo($params);
+            if ($rstMember === false) {
+                throw new CustomException('회원정보 수정 시 오류가 발생했습니다.', '1', route('member.modify_info'));
+            }
+
+            fnMoveUrl('정상적으로 처리되었습니다.', 1, route('member.modify_info'));
+        } catch (CustomException $e) {
+            echo $e;
+        } catch (\Exception $e) {
+            Log::error(__METHOD__ . $e);
+        }
+    }
+
+    /**
      * 초기 데이터 등록
      */
-    public function initMember()
+    public function initMember($user_id)
     {
-        if ($this->member->where('user_id', 'jerry')->get()->pluck('attributes')->count()) {
+        $user_info = collect($this->member->where('user_id', $user_id)->get()->pluck('attributes'));
+        if ($user_info->count() > 0) {
             fnMoveUrl('이미 등록되어있습니다', 1, route('/'));
         }
 
-        $params = collect(['user_id'=>'jerry', 'user_name' => '최진욱', 'user_pwd'=>'jerry', 'user_email' => 'nosent79@gmail.com']);
+        $params = collect([
+                            'user_id'       => $user_id,
+                            'user_name'     => '사용자',
+                            'user_pwd'      => $user_id,
+                            'user_email'    => ''
+        ]);
         $result = $this->member->setMember($params);
 
         echo ($result > 0) ? "성공" : "실패";

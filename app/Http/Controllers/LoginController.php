@@ -48,7 +48,6 @@ class LoginController extends Controller
     {
         try {
             $params = collect($this->request->all());
-
             $rstMember = $this->member->getMember($params);
 
             if ($rstMember === false) {

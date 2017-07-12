@@ -14,8 +14,7 @@ $app->get('/', ['as' => '/', function () use ($app) {
      return redirect()->route('auth.login');
 }]);
 
-//$app->group(['prefix' => 'member', 'middleware' => 'auth'], function () use ($app) {
-$app->group(['prefix' => 'member'], function () use ($app) {
+$app->group(['prefix' => 'member', 'middleware' => 'auth'], function () use ($app) {
     // 초기 멤버 셋팅
     $app->get('init_member', [
         'as' => 'member.init_member', 'uses' => 'MemberController@initMember'
@@ -25,9 +24,20 @@ $app->group(['prefix' => 'member'], function () use ($app) {
     $app->get('change_password', [
         'as' => 'member.change_password', 'uses' => 'MemberController@changePassword'
     ]);
+
     // 비밀번호 변경 처리
     $app->post('change_password_ok', [
         'as' => 'member.change_password_ok', 'uses' => 'MemberController@changePasswordOK'
+    ]);
+
+    // 회원정보 변경 화면
+    $app->get('modify_info', [
+        'as' => 'member.modify_info', 'uses' => 'MemberController@modifyMemberInfo'
+    ]);
+
+    // 회원정보 변경 처리
+    $app->post('modify_info_ok', [
+        'as' => 'member.modify_info_ok', 'uses' => 'MemberController@modifyMemberInfoOk'
     ]);
 });
 
@@ -137,9 +147,9 @@ $app->group(['prefix' => 'memo'], function () use ($app) {
 /**
  * 테스트 아이디 등록
  */
-$app->get('initMember', [
-    'as' => 'initMember', 'uses' => 'MemberController@initMember'
-]);
+$app->get('initMember/{user_id:[A-Za-z0-9]+}', [
+    'as' => 'initMember', 'uses' => 'MemberController@initMember', function ($user_id) {
+}]);
 
 
 /*

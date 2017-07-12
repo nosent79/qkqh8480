@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Log as Log;
 class Member extends Model
 {
     protected $table = 'members';
-    protected $primaryKey = 'user_id';
+//    protected $primaryKey = 'user_id';
     public $timestamps = false;
     protected $dates = [];
     protected $fillable = [
@@ -114,16 +114,38 @@ class Member extends Model
         }
     }
 
+    /**
+     * 회원정보 수정하기
+     *
+     * @param $params
+     * @return bool
+     */
+    public function modifyMemberInfo($params)
+    {
+        try {
+            $rgInsert = [
+                'user_name'     => $params->get('user_name'),
+                'user_email'    => $params->get('user_email'),
+            ];
+
+            return $this->where('user_id', $params->get('user_id'))->update($rgInsert);
+        } catch (\Exception $e) {
+            log::error(__METHOD__, $e);
+
+            return false;
+        }
+    }
+
     public function setMember($params)
     {
         try {
             $new_pwd = app('hash')->make($params->get('user_pwd'));
 
             $rgInsert = [
-                'user_id' => $params->get('user_id'),
-                'user_name' => $params->get('user_name'),
-                'user_email' => $params->get('user_email'),
-                'user_pwd' => $new_pwd,
+                'user_id'       => $params->get('user_id'),
+                'user_name'     => $params->get('user_name'),
+                'user_email'    => $params->get('user_email'),
+                'user_pwd'      => $new_pwd,
             ];
 
             return $this->insert($rgInsert);
