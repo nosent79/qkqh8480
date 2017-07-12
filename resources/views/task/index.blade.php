@@ -10,6 +10,9 @@
                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-controls="">
                     필터
                 </button>
+                <button class="btn btn-success _btn_register" type="button" data-href="{{ route('task.register') }}">
+                    등록
+                </button>
             </p>
             <div class="collapse" id="memo">
                 <div class="well _memo"></div>

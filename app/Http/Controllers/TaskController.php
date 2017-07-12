@@ -97,7 +97,7 @@ class TaskController
                 throw new CustomException('태스크 등록이 실패했습니다.', '1', route('task.index'));
             }
 
-            fnMoveUrl('정상적으로 처리되었습니다.', 1, route('task.view', ['task_id' => $rstTask]));
+            fnMoveUrl('정상적으로 처리되었습니다.', 1, route('task.index'));
         } catch (CustomException $e) {
             echo $e;
         } catch (\Exception $e) {
