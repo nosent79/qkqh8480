@@ -28,12 +28,12 @@
 @section('css')
     @parent
 
-    <link href="/css/custom.css" rel="stylesheet">
+    <link href="{{ asset("css/custom.css") }}" rel="stylesheet">
 @stop
 
 @section('add_js')
-    <script src="/js/validator.js"></script>
-    <script src="/js/memo.js"></script>
+    <script src="{{ asset("js/validator.js") }}"></script>
+    <script src="{{ asset("js/memo.js") }}"></script>
     <script>
         function init()
         {

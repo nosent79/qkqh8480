@@ -51,11 +51,11 @@
 @section('css')
     @parent
 
-    <link href="/css/custom.css" rel="stylesheet">
+    <link href="{{ asset("css/custom.css") }}" rel="stylesheet">
 @stop
 
 @section('add_js')
-    <script src="/js/validator.js"></script>
+    <script src="{{ asset("js/validator.js") }}"></script>
     <script>
         $(document).ready(function() {
             $("._btn_list").click(function () {
