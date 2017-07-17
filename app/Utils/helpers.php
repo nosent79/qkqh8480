@@ -146,7 +146,7 @@
 
             if ($days === 0) {
                 $result['msg'] = "D-Day";
-            } elseif ($days > 1) {
+            } elseif ($days > 0) {
                 $result['msg'] = "D-" . $days;
             } else {
                 $result['msg'] = "D+" . abs($days);

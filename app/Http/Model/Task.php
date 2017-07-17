@@ -31,8 +31,7 @@ class Task extends Model
     {
         try {
             $column = $params->get('orderby');
-
-            $query = $this->where('task_state', '<>', 'd');
+            $query = $this->where('reg_id', app('session')->get('user_id'))->where('task_state', '<>', 'd');
 
             // 상태
             if ($params->has('task_state')) {
@@ -117,6 +116,7 @@ class Task extends Model
                 'comment'           => $params->get('comment'),
                 'deadline_date'     => $params->get('deadline_date'),
                 'reg_date'          => \Carbon\Carbon::now(),
+                'reg_id'            => app('session')->get('user_id'),
             ];
 
             return $this->insertGetId($rgInsert);

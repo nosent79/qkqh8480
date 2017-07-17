@@ -38,8 +38,8 @@ class Memo extends Model
             $rgInsert = [
                 'memo'      => $params->get('memo'),
                 'reg_date'  => \Carbon\Carbon::now(),
-                'reg_id'    => $params->get('reg_id'),
-                'reg_nm'    => $params->get('reg_nm'),
+                'reg_id'    => app('session')->get('user_id'),
+                'reg_nm'    => app('session')->get('user_name'),
             ];
 
             return $this->insertGetId($rgInsert);

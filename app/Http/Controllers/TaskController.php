@@ -150,6 +150,8 @@ class TaskController
                 'corp_name'         => $params->get('corp_name'),
                 'comment'           => $params->get('comment'),
                 'deadline_date'     => $params->get('deadline_date'),
+                'upd_date'          => \Carbon\Carbon::now(),
+                'upd_id'            => app('session')->get('user_id'),
             ];
 
             $result = $this->task::where('task_id', $params->get('task_id'))->update($rgUpdate);
@@ -202,7 +204,8 @@ class TaskController
             }
 
             $rgUpdate = [
-                'task_state' => 'd',
+                'task_state'    => 'd',
+                'del_date'      => \Carbon\Carbon::now(),
             ];
             $result = $this->task::where('task_id', $task_id)->update($rgUpdate);
             if ($result < 1) {

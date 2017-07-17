@@ -20,9 +20,6 @@
                 </span>
             </div>
         @endforelse
-        {{--<div class="thumbnail">--}}
-        {{--<p class="">가나다라마가나다라마가나다라마가나다라마가나다라마가나다라마</p>--}}
-        {{--</div>--}}
     </div>
 @stop
 
