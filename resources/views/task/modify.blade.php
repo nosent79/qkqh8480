@@ -47,7 +47,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="price">금액</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="price" name="price" type="number" placeholder="금액" value="{{ number_format($params->get('price')) }}">
+                            <input class="form-control" id="price" name="price" type="number" placeholder="금액" value="{{ $params->get('price') }}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -125,19 +125,26 @@
         $(function() {
             $("#frmTask").submit(function() {
                 var task_type = $('input:radio[name=task_type]');
+                var task_state = $('input:radio[name="task_state"]:checked').val();
 
                 // 태스크 타입 체크
                 if (! task_type.is(':checked')) {
+                    alert('구분을 선택해주세요');
+
                     return false;
                 }
 
                 // 마감기한 체크
                 if (! checkDateFormat($("#deadline_date").val())) {
+                    alert('마감기한을 선택해주세요');
+
                     return false;
                 }
 
-                if (task_type.val() === "price") {
+                if ($('input:radio[name="task_type"]:checked').val() === "price" && task_state === 'dc') {
                     if (! checkDateFormat($("#deposit_date").val())) {
+                        alert("입금일자를 선택해주세요");
+
                         return false;
                     }
                 }

@@ -5,7 +5,7 @@
         <div class="">
             <p class="text-center">
                 <button class="btn btn-default _btn_memo" type="button" data-toggle="collapse" data-target="#memo" aria-expanded="false" aria-controls="">
-                    메모보기
+                    메모
                 </button>
                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-controls="">
                     필터
@@ -53,7 +53,8 @@
                     <div>
                         <div class="text-left" style="float:left">
                             <span class="label label-default">{{ $v->get('deadline_date') }}</span>
-                            <span class="label label-default">{{ $v->get('corp_name') }}</span>
+                            <span class="label label-default">{{ config('constants.task')['task_type'][$v->get('task_type')] }}</span>
+{{--                            <span class="label label-default">{{ $v->get('corp_name') }}</span>--}}
                             @if (in_array($v->get('task_state'), ['w', 'dc', 'wc']))
                             <span class="label label-default">{{ config('constants.task')['task_state'][$v->get('task_state')] }}</span>
                             @elseif ($v->get('task_state') === 'cw')
@@ -63,12 +64,16 @@
                             @endif
                         </div>
                         <div class="text-right">
-                            @if (fnDiffRemainDays($v->get('deadline_date'))['days'] < 0)
-                                <span class="label label-default">{{ fnDiffRemainDays($v->get('deadline_date'))['msg'] }}</span>
-                            @elseif (fnDiffRemainDays($v->get('deadline_date'))['days'] <= 3)
-                                <span class="label label-danger">{{ fnDiffRemainDays($v->get('deadline_date'))['msg'] }}</span>
+                            @if (in_array($v->get('task_state'), ['w']))
+                                @if (fnDiffRemainDays($v->get('deadline_date'))['days'] < 0)
+                                    <span class="label label-default">{{ fnDiffRemainDays($v->get('deadline_date'))['msg'] }}</span>
+                                @elseif (fnDiffRemainDays($v->get('deadline_date'))['days'] <= 3)
+                                    <span class="label label-danger">{{ fnDiffRemainDays($v->get('deadline_date'))['msg'] }}</span>
+                                @else
+                                    <span class="label label-success">{{ fnDiffRemainDays($v->get('deadline_date'))['msg'] }}</span>
+                                @endif
                             @else
-                                <span class="label label-success">{{ fnDiffRemainDays($v->get('deadline_date'))['msg'] }}</span>
+                                <span class="">&nbsp;</span>
                             @endif
                         </div>
                     </div>

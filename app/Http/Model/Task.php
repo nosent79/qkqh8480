@@ -44,7 +44,7 @@ class Task extends Model
                     $query->where($where, $value);
                 }
             } else {
-                $query->whereIn('task_state', ['w', 'cw'] );
+                $query->whereIn('task_state', ['w'] );
             }
 
             if (is_array($column)) {

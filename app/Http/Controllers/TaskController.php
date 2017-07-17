@@ -139,7 +139,7 @@ class TaskController
     {
         try {
             $params = collect($this->request->all());
-
+dd($params);
             $rgUpdate = [
                 'title'             => $params->get('title'),
                 'task_type'         => $params->get('task_type'),

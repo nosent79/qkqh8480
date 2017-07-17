@@ -95,6 +95,11 @@
     if (! function_exists('fnParseDate')) {
         function fnParseDate($date, $format='Y-m-d')
         {
+            if (empty($date) || $date == "0000-00-00") {
+
+                return "";
+            }
+
             $pattern = "/(\d{4})(\d{2})(\d{2})/i";
             $replacement='${1}-${2}-${3}';
             $result = preg_replace($pattern, $replacement, $date);
