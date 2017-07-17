@@ -83,9 +83,8 @@
                 </span>
             </div>
         @endforelse
-
         <div class="text-center">
-            {!! $tasks->render() !!}
+            {!! $tasks->appends(['orderby[deadline_date]' => $params->get('orderby')['deadline_date'], 'task_state' => $params->get('task_state')])->render() !!}
         </div>
     </div>
 @stop

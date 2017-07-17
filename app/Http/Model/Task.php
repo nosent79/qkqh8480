@@ -31,14 +31,20 @@ class Task extends Model
     {
         try {
             $column = $params->get('orderby');
-            $query = $this->where('reg_id', app('session')->get('user_id'))->where('task_state', '<>', 'd');
+            $query = $this->where('reg_id', app('session')->get('user_id'));
 
             // 상태
             if ($params->has('task_state')) {
                 $where = 'task_state';
                 $value = $params->get('task_state');
 
-                $query->where($where, 'like', $value.'%');
+                if (empty($value)) {
+                    $query->where($where, 'like', '%');
+                } else {
+                    $query->where($where, $value);
+                }
+            } else {
+                $query->whereIn('task_state', ['w', 'cw'] );
             }
 
             if (is_array($column)) {

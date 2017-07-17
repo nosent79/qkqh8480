@@ -159,11 +159,13 @@ class TaskController
                 throw new CustomException('오류가 발생했습니다.', 1, route('task.index'));
             }
 
-            fnMoveUrl('정상적으로 처리되었습니다.', 1, route('task.view', ['task_id' => $params->get('task_id')]));
+            fnMoveUrl('정상적으로 처리되었습니다.', 1, route('task.index'));
         } catch (CustomException $e) {
             echo $e;
         } catch (\Exception $e) {
             Log::error(__METHOD__ . $e);
+
+            fnMoveUrl('오류가 발생했습니다.', 1, route('task.index'));
         }
     }
 
