@@ -139,7 +139,7 @@ class TaskController
     {
         try {
             $params = collect($this->request->all());
-dd($params);
+
             $rgUpdate = [
                 'title'             => $params->get('title'),
                 'task_type'         => $params->get('task_type'),
@@ -208,6 +208,7 @@ dd($params);
             $rgUpdate = [
                 'task_state'    => 'd',
                 'del_date'      => \Carbon\Carbon::now(),
+                'del_id'        => app('session')->get('user_id'),
             ];
             $result = $this->task::where('task_id', $task_id)->update($rgUpdate);
             if ($result < 1) {

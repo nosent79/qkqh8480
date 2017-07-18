@@ -28,8 +28,9 @@ class CreateTasksTable extends Migration
             $table->timestamp('reg_date')->comment('등록일자')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->string('reg_id', 30)->comment('등록자아이디')->default('');
             $table->timestamp('upd_date')->comment('수정일자')->default('0000-00-00 00:00:00');
-            $table->string('upd_ㅑㅇ', 30)->comment('수정자아이디')->default('');
+            $table->string('upd_id', 30)->comment('수정자아이디')->default('');
             $table->timestamp('del_date')->comment('삭제일자')->default('0000-00-00 00:00:00');
+            $table->string('del_id', 30)->comment('삭제자아이디')->default('');
 
             $table->index(['deposit_date', 'task_state'], 'idx_deposit_date_and_task_state');
             $table->index(['deadline_date', 'task_state'], 'idx_deadline_date_and_task_state');

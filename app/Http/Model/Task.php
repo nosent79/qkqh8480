@@ -84,7 +84,7 @@ class Task extends Model
      */
     public function getTaskDeleted()
     {
-        return $this->where('task_state', 'd')->get()->pluck('attributes');
+        return $this->where('task_state', 'd')->where('del_id', app('session')->get('user_id'))->get()->pluck('attributes');
     }
 
     /**
