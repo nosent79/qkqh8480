@@ -98,7 +98,11 @@
             </div>
         @endforelse
         <div class="text-center">
-            {!! $tasks->appends(['orderby[deadline_date]' => $params->get('orderby')['deadline_date'], 'task_state' => $params->get('task_state')])->render() !!}
+            {!! $tasks->appends([
+                                'orderby[deadline_date]' => $params->get('orderby')['deadline_date'],
+                                'task_state' => $params->get('task_state'),
+                                'task_type' => $params->get('task_type')
+                                ])->render() !!}
         </div>
     </div>
 @stop
