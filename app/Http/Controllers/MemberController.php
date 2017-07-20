@@ -74,7 +74,7 @@ class MemberController extends Controller
                 throw new CustomException('비밀번호 변경에 실패했습니다.', '1', route('member.change_password'));
             }
 
-            fnMoveUrl('정상적으로 처리되었습니다.', 1, route('member.change_password'));
+            fnMoveUrl('정상적으로 처리되었습니다.', 1, route('task.index'));
         } catch (CustomException $e) {
             echo $e;
         } catch (\Exception $e) {

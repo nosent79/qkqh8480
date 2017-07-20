@@ -23,7 +23,7 @@ class Memo extends Model
      */
     public function getMemo()
     {
-        return $this->orderbyDesc('seq')->first();
+        return $this->where('reg_id', app('session')->get('user_id'))->orderbyDesc('seq')->first();
     }
 
     /**

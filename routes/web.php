@@ -108,7 +108,7 @@ $app->group(['prefix' => 'task', 'middleware' => 'auth'], function () use ($app)
 /**
  * 메모 등록
  */
-$app->group(['prefix' => 'memo'], function () use ($app) {
+$app->group(['prefix' => 'memo', 'middleware' => 'auth'], function () use ($app) {
     $app->get('view', [
         'as' => 'memo.view', 'uses' => 'MemoController@view'
     ]);
@@ -151,6 +151,9 @@ $app->get('initMember/{user_id:[A-Za-z0-9]+}', [
     'as' => 'initMember', 'uses' => 'MemberController@initMember', function ($user_id) {
 }]);
 
+$app->get('initMemberPwd/{user_id:[A-Za-z0-9]+}', [
+    'as' => 'initMemberPwd', 'uses' => 'MemberController@forceChangePassword', function ($user_id) {
+}]);
 
 /*
  * Here is test code area
