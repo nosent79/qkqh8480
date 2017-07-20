@@ -102,7 +102,7 @@ class Member extends Model
     public function changePassword($params)
     {
         try {
-            $new_pwd = app('hash')->make($params->get('user_pwd'));
+            $new_pwd = app('hash')->make($params->get('new_pwd'));
 
             return $this
                 ->where('user_id', app('session')->get('user_id'))
