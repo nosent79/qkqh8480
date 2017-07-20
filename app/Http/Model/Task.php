@@ -33,6 +33,13 @@ class Task extends Model
             $column = $params->get('orderby');
             $query = $this->where('reg_id', app('session')->get('user_id'));
 
+            // 타입
+            if ($params->has('task_type')) {
+                $where = 'task_type';
+                $value = $params->get('task_type');
+                $query->where($where, $value);
+            }
+
             // 상태
             if ($params->has('task_state')) {
                 $where = 'task_state';

@@ -28,10 +28,19 @@
                         {{--<option value="asc">과거기준</option>--}}
                         {{--<option value="desc"></option>--}}
                     {{--</select>--}}
+                    <h4>정렬구분</h4>
                     <select class="form-control" name="orderby[deadline_date]">
                         {{--<option value="desc">마감</option>--}}
                         <option value="asc">마감임박순</option>
                     </select>
+                    <h4>타입구분</h4>
+                    <select class="form-control" name="task_type">
+                        <option value="">전체</option>
+                        @foreach(config('constants.task')['task_type'] as $k => $v)
+                            <option value="{{ $k }}" {{ getSelectedText($k, $params->get('task_type'), 'selected') }}>{{ $v }}</option>
+                        @endforeach
+                    </select>
+                    <h4>상태구분</h4>
                     <select class="form-control" name="task_state">
                         <option value="">전체</option>
                         @foreach(config('constants.task')['task_state'] as $k => $v)
