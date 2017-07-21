@@ -31,7 +31,7 @@
                     <div class="col-sm-6">
                         <div class="radio">
                             @foreach(config('constants.task')['task_state'] as $k => $v)
-                                <label class="_ts"><input type="radio" name="task_state" value="{{ $k }}">{{ $v }}</label>
+                                <label class="_ts"><input type="radio" id="task_state_{{ $k }}" name="task_state" value="{{ $k }}">{{ $v }}</label>
                             @endforeach
                         </div>
                     </div>
@@ -143,6 +143,15 @@
         });
 
         $(function() {
+            // 타입이 원고료이면서 입금완료를 클릭할 경우
+            // 입금일자는 현재 일자로 셋팅
+            $('input:radio[name="task_state"]').click(function () {
+                var type = $('input:radio[name=task_type]:checked').val();
+                if (type === 'price' && $(this).val() === 'dc') {
+                    $("#deposit_date").val(parseToDateFormat(new Date()));
+                }
+            });
+
             $("#frmTask").submit(function() {
                 var task_type = $('input:radio[name=task_type]');
                 var task_state = $('input:radio[name=task_state]');

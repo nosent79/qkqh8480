@@ -12,6 +12,7 @@
     <script src="{{ asset("jquery/jquery-1.12.4.min.js") }}"></script>
     <script src="{{ asset("jquery/jquery-ui-1.12.1.min.js") }}"></script>
     <script src="{{ asset("bootstrap/js/bootstrap.min.js") }}"></script>
+    <script src="{{ asset("js/utils.js") }}"></script>
 
     @yield('add_js')
 </body>

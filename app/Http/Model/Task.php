@@ -37,7 +37,12 @@ class Task extends Model
             if ($params->has('task_type')) {
                 $where = 'task_type';
                 $value = $params->get('task_type');
-                $query->where($where, $value);
+
+                if (empty($value)) {
+                    $query->where($where, 'like', '%');
+                } else {
+                    $query->where($where, $value);
+                }
             }
 
             // 상태
