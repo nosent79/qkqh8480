@@ -30,8 +30,15 @@ class Task extends Model
     public function getTaskExceptDeleted($params)
     {
         try {
+            $query = $this->select('tasks.*', 't.ordering')
+                ->join('task_sort as t', function ($join) {
+                    $join->on('tasks.task_state', '=', 't.code')
+                        ->where('t.type', 'task_state');
+                })
+                ->orderby('t.ordering');
+
             $column = $params->get('orderby');
-            $query = $this->where('reg_id', app('session')->get('user_id'));
+            $query = $query->where('reg_id', app('session')->get('user_id'));
 
             // 타입
             if ($params->has('task_type')) {
