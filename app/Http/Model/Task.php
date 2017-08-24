@@ -38,7 +38,10 @@ class Task extends Model
                 ->orderby('t.ordering');
 
             $column = $params->get('orderby');
-            $query = $query->where('reg_id', app('session')->get('user_id'));
+
+            if (app('session')->get('admin_flag') === 'N') {
+                $query->where('reg_id', app('session')->get('user_id'));
+            }
 
             // 타입
             if ($params->has('task_type')) {
@@ -119,7 +122,11 @@ class Task extends Model
             $query->where('task_state', $params->get('task_state'));
         }
 
-        return $query->paginate(5);
+        if (app('session')->get('admin_flag') === 'N') {
+            $query->where('reg_id', app('session')->get('user_id'));
+        }
+
+        return $query;
     }
 
     /**

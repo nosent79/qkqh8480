@@ -237,6 +237,13 @@ class TaskController
             $params->put('task_state', $params->get('task_state', 'all'));
 
             $tasks = $this->task->getTaskStatistics($params);
+            $datas = $tasks->get()->pluck('attributes');
+            $total_price = $datas->sum('price');
+            $total_count = $datas->count();
+            $params->put('total_price', $total_price);
+            $params->put('total_count', $total_count);
+
+            $tasks = $tasks->paginate(5);
 
             return view('task.statistics', [
                 'params'    => $params,
