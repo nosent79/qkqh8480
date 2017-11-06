@@ -126,6 +126,8 @@ class Task extends Model
             $query->where('reg_id', app('session')->get('user_id'));
         }
 
+        $query->orderby('reg_date', 'desc');
+
         return $query;
     }
 

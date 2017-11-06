@@ -233,7 +233,8 @@ class TaskController
 
             $params = collect($this->request->all());
             $params->put('s_date', $params->get('s_date', fnGetFirstDay($date)));
-            $params->put('e_date', $params->get('e_date', $date->toDateString()));
+//            $params->put('e_date', $params->get('e_date', $date->toDateString()));
+            $params->put('e_date', $params->get('e_date', fnGetLastDay($date)));
             $params->put('task_state', $params->get('task_state', 'all'));
 
             $tasks = $this->task->getTaskStatistics($params);

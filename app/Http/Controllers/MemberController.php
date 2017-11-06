@@ -134,19 +134,31 @@ class MemberController extends Controller
      */
     public function initMember($user_id)
     {
-        $user_info = collect($this->member->where('user_id', $user_id)->get()->pluck('attributes'));
-        if ($user_info->count() > 0) {
-            fnMoveUrl('이미 등록되어있습니다', 1, route('/'));
+        try {
+            if (app('session')->get('user_id') !== 'jerry') {
+                throw new CustomException('권한이 없습니다.', '1', route('/'));
+            }
+
+            $user_info = collect($this->member->where('user_id', $user_id)->get()->pluck('attributes'));
+            if ($user_info->count() > 0) {
+                fnMoveUrl('이미 등록되어있습니다', 1, route('/'));
+            }
+
+            $params = collect([
+                'user_id'       => $user_id,
+                'user_name'     => '사용자',
+                'user_pwd'      => $user_id,
+                'user_email'    => ''
+            ]);
+            $result = $this->member->setMember($params);
+
+            echo ($result > 0) ? "성공" : "실패";
+        } catch (CustomException $e) {
+            echo $e;
+        } catch (\Exception $e) {
+            Log::error(__METHOD__ . $e);
         }
 
-        $params = collect([
-                            'user_id'       => $user_id,
-                            'user_name'     => '사용자',
-                            'user_pwd'      => $user_id,
-                            'user_email'    => ''
-        ]);
-        $result = $this->member->setMember($params);
 
-        echo ($result > 0) ? "성공" : "실패";
     }
 }
