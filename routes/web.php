@@ -19,8 +19,11 @@ $app->group(['prefix' => 'api'], function () use ($app) {
     // v1
     $app->group(['prefix' => 'v1'], function () use ($app) {
         //네이버 연동
-        $app->get('index', [
+        $app->get('/', [
             'as' => 'api.v1.index', 'uses' => 'SocialController@index'
+        ]);
+        $app->get('naver_login', [
+            'as' => 'api.v1.naver_login', 'uses' => 'SocialController@naver_login'
         ]);
         $app->get('naver_callback', [
             'as' => 'api.v1.naver_callback', 'uses' => 'SocialController@callback_naver'

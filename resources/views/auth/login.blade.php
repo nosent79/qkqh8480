@@ -8,6 +8,9 @@
             <input type="text" id="user_id" name="user_id" class="form-control" placeholder="아이디" required autofocus>
             <label for="user_pwd" class="sr-only">Password</label>
             <input type="password" id="user_pwd" name="user_pwd" class="form-control" placeholder="비밀번호" required>
+            <div class="empty_space">
+                <div class="naver_id_login" id="naver_id_login" ><span>네이버 아이디로 로그인</span></div>
+            </div>
             <div class="checkbox">
                 <label>
                     <input type="checkbox" id="save_user_id" name="save_user_id" value="remember-me"> 아이디 저장
@@ -20,7 +23,7 @@
 @section('css')
     @parent
 
-    <link href="/css/custom.css" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 @stop
 @section('add_js')
     <script>
