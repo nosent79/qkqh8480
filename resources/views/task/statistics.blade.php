@@ -47,7 +47,7 @@
 
             {{--반복문 시작--}}
             <div class="well text-right">
-                <span>{{ "총 ". $tasks->count() . "건, 총 " . number_format($tasks->sum('price')) . "원 입니다." }}</span>
+                <span>{{ "총 ". $params->get('total_count') . "건, 총 " . number_format($params->get('total_price')) . "원 입니다." }}</span>
             </div>
 
             @forelse($tasks as $k => $v)
@@ -58,7 +58,11 @@
                             <span class="label label-default">{{ $v->get('deposit_date') }}</span>
                         </div>
                         <div class="text-right">
-                            <span class="label label-default">{{ $v->get('corp_name') }}</span>
+                            @if (empty($v->get('corp_name')))
+                                &nbsp;
+                            @else
+                                <span class="label label-default">{{ $v->get('corp_name') }}</span>
+                            @endif
                         </div>
                     </div>
                     <span class="">
@@ -70,7 +74,7 @@
             @endforelse
 
             <div class="text-center">
-                {!! $tasks->appends(['task_state' => $params->get('task_state')])->render() !!}
+                {!! $tasks->appends(['task_state' => $params->get('task_state'), 's_date' => $params->get('s_date'), 'e_date' => $params->get('e_date')])->render() !!}
             </div>
         </div>
 @stop

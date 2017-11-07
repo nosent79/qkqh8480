@@ -18,3 +18,7 @@ body {
 .bold {
     font-weight:bold;
 }
+
+.empty_space { padding: 10px 0; }
+.naver_id_login{ display:inline-block; height:33px; padding-left:32px; border:1px solid #0EA400; background:#1EC800 url(../images/m_btn_naver01.png) no-repeat; color:#FFF; cursor:pointer }
+.naver_id_login span{ display:inline-block; width:201px; margin-top:5px; text-align:center; letter-spacing:-1px }
