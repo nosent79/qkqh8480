@@ -1,5 +1,6 @@
 ﻿@extends('default.master')
 @section('body')
+{{ env('APP_ENV') }}
     <div class="container">
         @include('default.nav')
         <form class="form-signin" method="post" action="{{ route('auth.login_ok') }}">

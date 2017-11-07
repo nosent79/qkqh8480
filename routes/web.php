@@ -28,6 +28,10 @@ $app->group(['prefix' => 'api'], function () use ($app) {
         $app->get('naver_callback', [
             'as' => 'api.v1.naver_callback', 'uses' => 'SocialController@callback_naver'
         ]);
+
+        $app->get('didimdol_loan_rate', [
+            'as' => 'api.v1.didimdol_loan_rate', 'uses' => 'APIController@didimdolLoanRate'
+        ]);
     });
 });
 

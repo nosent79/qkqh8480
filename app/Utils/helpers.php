@@ -240,7 +240,7 @@
         function asset($path, $secured = false)
         {
             if (env('APP_ENV') === "production") {
-                $path = "/public/" . $path;
+                $path = "public/" . $path;
             }
             return urlGenerator()->asset($path, $secured);
         }
