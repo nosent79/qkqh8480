@@ -30,8 +30,8 @@
                     {{--</select>--}}
                     <h4>정렬구분</h4>
                     <select class="form-control" name="orderby[deadline_date]">
-                        {{--<option value="desc">마감</option>--}}
                         <option value="asc">마감임박순</option>
+                        <option value="desc">등록일최근</option>
                     </select>
                     <h4>타입구분</h4>
                     <select class="form-control" name="task_type">
@@ -47,6 +47,8 @@
                         <option value="{{ $k }}" {{ getSelectedText($k, $params->get('task_state'), 'selected') }}>{{ $v }}</option>
                         @endforeach
                     </select>
+                    <h4>업체명</h4>
+                    <input class="form-control" id="corp_name" name="corp_name" type="text" placeholder="업체명" value="{{ $params->get('corp_name') }}" />
                     <div class="pt10 text-right">
                         <button class="btn btn-primary" type="submit">조회</button>
                     </div>

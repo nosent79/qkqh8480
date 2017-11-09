@@ -38,6 +38,7 @@ class Task extends Model
                 ->orderby('t.ordering');
 
             $column = $params->get('orderby');
+            $sort = "asc";
 
             if (app('session')->get('admin_flag') === 'N') {
                 $query->where('reg_id', app('session')->get('user_id'));
@@ -65,8 +66,18 @@ class Task extends Model
                 } else {
                     $query->where($where, $value);
                 }
+
+                $sort = "desc";
             } else {
                 $query->whereIn('task_state', ['w'] );
+            }
+
+            // 업체명
+            if ($params->has('corp_name')) {
+                $where = 'corp_name';
+                $value = $params->get('corp_name');
+
+                    $query->where($where, 'like', $value.'%');
             }
 
             if (is_array($column)) {
@@ -87,12 +98,11 @@ class Task extends Model
                 }
             } else {
                 $orderby = 'deadline_date';
-                $type = 'asc';
 
-                $query->orderBy($orderby, $type);
+                $query->orderBy($orderby, $sort);
             }
 
-            return $query->paginate(5);
+            return $query->paginate(10);
         } catch (\Exception $e) {
 
             return false;
