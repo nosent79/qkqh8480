@@ -23,7 +23,7 @@
 @section('css')
     @parent
 
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css?v='.date('Ymd')) }}" rel="stylesheet">
 @stop
 @section('add_js')
     <script>

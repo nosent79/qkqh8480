@@ -94,5 +94,5 @@
 
 @section('add_js')
     <script src="{{ asset("js/task.js") }}"></script>
-    <script src="{{ asset("js/datepicker.js") }}"></script>
+    <script src="{{ asset("js/datepicker.js?v=".date("ymd")) }}"></script>
 @stop
