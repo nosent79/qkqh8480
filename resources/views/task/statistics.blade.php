@@ -16,12 +16,13 @@
                         <div class="form-group">
                             <label class="col-sm-3 col-lg-1 control-label" for="s_date">시작일자</label>
                             <div class="col-sm-6 col-lg-5">
-                                <input class="form-control _datepicker" id="s_date" name="s_date" type="text" placeholder="시작일자" value="{{ $params->get('s_date') }}">
+                                <input class="form-control _datepicker" id="s_date" name="s_ym" type="text" placeholder="시작일자" value="{{ $params->get('s_ym') }}">
+                                {{--<input class="form-control _datepicker" id="s_date" name="s_date" type="text" placeholder="시작일자" value="{{ $params->get('s_date') }}">--}}
                             </div>
-                            <label class="col-sm-3 col-lg-1 control-label" for="e_date">종료일자</label>
-                            <div class="col-sm-6 col-lg-5">
-                                <input class="form-control _datepicker" id="e_date" name="e_date" type="text" placeholder="종료일자" value="{{ $params->get('e_date') }}">
-                            </div>
+                            {{--<label class="col-sm-3 col-lg-1 control-label" for="e_date">종료일자</label>--}}
+                            {{--<div class="col-sm-6 col-lg-5">--}}
+                                {{--<input class="form-control _datepicker" id="e_date" name="e_date" type="text" placeholder="종료일자" value="{{ $params->get('e_date') }}">--}}
+                            {{--</div>--}}
                         </div>
 
                         <div class="form-group">
@@ -74,7 +75,7 @@
             @endforelse
 
             <div class="text-center">
-                {!! $tasks->appends(['task_state' => $params->get('task_state'), 's_date' => $params->get('s_date'), 'e_date' => $params->get('e_date')])->render() !!}
+                {!! $tasks->appends(['task_state' => $params->get('task_state'), 's_ym' => $params->get('s_ym')])->render() !!}
             </div>
         </div>
 @stop
@@ -84,6 +85,11 @@
 
     <link href="{{ asset("css/custom.css") }}" rel="stylesheet">
     <link href="{{ asset("css/task.css") }}" rel="stylesheet">
+
+    <style>
+        table.ui-datepicker-calendar { display:none; }
+    </style>
+
 @stop
 
 @section('add_js')

@@ -231,10 +231,17 @@ class TaskController
         try {
             $date = \Carbon\Carbon::today();
 
+            // 년월 선택으로 해당월의 초일부터 말일까지 검색으로 변경
             $params = collect($this->request->all());
-            $params->put('s_date', $params->get('s_date', fnGetFirstDay($date)));
-//            $params->put('e_date', $params->get('e_date', $date->toDateString()));
-            $params->put('e_date', $params->get('e_date', fnGetLastDay($date)));
+
+            $params->put('s_ym', $params->get('s_ym', fnParseDate($date, 'Y-m')));
+            $base_date = fnParseDateToCarbon($params->get('s_ym'));
+
+            // 2017-11-01 (초일)
+            $params->put('s_date', fnParseDate($base_date));
+            // 2017-11-30 (말일)
+            $params->put('e_date', fnGetLastDay($base_date));
+
             $params->put('task_state', $params->get('task_state', 'all'));
 
             $tasks = $this->task->getTaskStatistics($params);
