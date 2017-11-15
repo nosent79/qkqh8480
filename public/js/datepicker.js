@@ -18,6 +18,10 @@ function cleanDatepicker() {        //datepicker 삭제 버튼
 $(document).ready(function () {
     cleanDatepicker();
 
+    $("._datepicker").datepicker({
+        dateFormat: 'yy-mm-dd'
+    });
+
     $.datepicker.regional['ko'] = {
         closeText: '닫기',
         prevText: '이전',
