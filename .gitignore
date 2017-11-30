@@ -3,3 +3,6 @@
 Homestead.json
 Homestead.yaml
 .env
+.env.production
+index.php
+storage/framework/sessions/

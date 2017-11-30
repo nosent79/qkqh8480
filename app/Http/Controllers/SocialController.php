@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Libraries\NaverAPI;
+use Socialite;
 
 class SocialController extends Controller
 {
@@ -32,13 +33,16 @@ class SocialController extends Controller
     // 네이버 로그인 접근토큰 요청 예제
     public function naver_login()
     {
-        $params = collect($this->request->all());
-        $naver_api = $this->naver->getApiUrl();
 
-        return view('auth.social.naver_login', [
-            'params'    => $params,
-            'url'       => $naver_api,
-        ]);
+        return Socialite::driver('naver')->redirect();
+
+//        $params = collect($this->request->all());
+//        $naver_api = $this->naver->getApiUrl();
+//
+//        return view('auth.social.naver_login', [
+//            'params'    => $params,
+//            'url'       => $naver_api,
+//        ]);
     }
 
     // 네이버 로그인 콜백 예제

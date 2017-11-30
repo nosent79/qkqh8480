@@ -16,7 +16,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 col-lg-1 control-label" for="s_date">시작일자</label>
                             <div class="col-sm-6 col-lg-5">
-                                <input class="form-control _datepicker" id="s_date" name="s_ym" type="text" placeholder="시작일자" value="{{ $params->get('s_ym') }}">
+                                <input class="form-control _datepicker1" id="s_date" name="s_ym" type="text" placeholder="시작일자" value="{{ $params->get('s_ym') }}">
                                 {{--<input class="form-control _datepicker" id="s_date" name="s_date" type="text" placeholder="시작일자" value="{{ $params->get('s_date') }}">--}}
                             </div>
                             {{--<label class="col-sm-3 col-lg-1 control-label" for="e_date">종료일자</label>--}}
@@ -95,4 +95,5 @@
 @section('add_js')
     <script src="{{ asset("js/task.js") }}"></script>
     <script src="{{ asset("js/datepicker.js?v=".date("ymd")) }}"></script>
+
 @stop
