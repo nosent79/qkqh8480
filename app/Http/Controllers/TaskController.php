@@ -156,16 +156,16 @@ class TaskController
 
             $result = $this->task::where('task_id', $params->get('task_id'))->update($rgUpdate);
             if ($result < 1) {
-                throw new CustomException('오류가 발생했습니다.', 1, route('task.index'));
+                throw new CustomException('오류가 발생했습니다.', 1, route('task.index', ['task_state' => $params->get('task_state')]));
             }
 
-            fnMoveUrl('정상적으로 처리되었습니다.', 1, route('task.index'));
+            fnMoveUrl('정상적으로 처리되었습니다.', 1, route('task.index', ['task_state' => $params->get('task_state')]));
         } catch (CustomException $e) {
             echo $e;
         } catch (\Exception $e) {
             Log::error(__METHOD__ . $e);
 
-            fnMoveUrl('오류가 발생했습니다.', 1, route('task.index'));
+            fnMoveUrl('오류가 발생했습니다.', 1, route('task.index', ['task_state' => $params->get('task_state')]));
         }
     }
 

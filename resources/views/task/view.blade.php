@@ -100,7 +100,10 @@
                     <div class="col-sm-6 text-center">
                     @if ($params->get('task_state') !== 'd')
                         <button class="btn btn-danger _btn_delete" type="button" data-href="{{ route('task.delete', ['task_id' => $params->get('task_id')]) }}">삭제 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-                        <button class="btn btn-warning _btn_modify" type="button" data-href="{{ route('task.modify', ['task_id' => $params->get('task_id')]) }}">수정 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                        <button class="btn btn-warning _btn_modify" type="button" data-href="{{ route('task.modify', [
+                            'task_id' => $params->get('task_id'),
+                            'task_state' => $params->get('task_state')
+                        ]) }}">수정 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
                     @endif
                         <button class="btn btn-primary _btn_register" type="button" data-href="{{ route('task.register') }}">신규 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
                         <button class="btn btn-default _btn_list" type="button" data-href="{{ route('task.index') }}">리스트 <span class="glyphicon glyphicon-list" aria-hidden="true"></span></button>
