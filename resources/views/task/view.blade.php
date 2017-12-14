@@ -8,20 +8,7 @@
             </div>
             <form class="form-horizontal">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="">구분</label>
-                    <div class="col-sm-6 text-center" data-toggle="buttons">
-                        <label class="btn btn-default _task_type" style="width:49%;" disabled="true">
-                            <input name="task_type" type="radio" value="product" />
-                            <span class="fa fa-check"></span>&nbsp;제품
-                        </label>
-                        <label class="btn btn-default _task_type" style="width:49%;" disabled="true">
-                            <input name="task_type" type="radio" value="price" />
-                            <span class="fa fa-check"></span>&nbsp;원고료
-                        </label>
-                    </div>
-                    {{--<div class="col-sm-6 text-center">--}}
-                        {{--<label class="btn btn-default" style="width:100%">&nbsp;{{ fnGetArrayValue($params->get('task_type'), config('constants.task')['task_type']) }}</label>--}}
-                    {{--</div>--}}
+                    @include('task.task_template')
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label" for="title">태스크명</label>
@@ -100,7 +87,10 @@
                     <div class="col-sm-6 text-center">
                     @if ($params->get('task_state') !== 'd')
                         <button class="btn btn-danger _btn_delete" type="button" data-href="{{ route('task.delete', ['task_id' => $params->get('task_id')]) }}">삭제 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-                        <button class="btn btn-warning _btn_modify" type="button" data-href="{{ route('task.modify', ['task_id' => $params->get('task_id')]) }}">수정 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                        <button class="btn btn-warning _btn_modify" type="button" data-href="{{ route('task.modify', [
+                            'task_id' => $params->get('task_id'),
+                            'task_state' => $params->get('task_state')
+                        ]) }}">수정 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
                     @endif
                         <button class="btn btn-primary _btn_register" type="button" data-href="{{ route('task.register') }}">신규 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
                         <button class="btn btn-default _btn_list" type="button" data-href="{{ route('task.index') }}">리스트 <span class="glyphicon glyphicon-list" aria-hidden="true"></span></button>

@@ -8,17 +8,7 @@
             </div>
             <form id="frmTask" name="frmTask" class="form-horizontal" method="post" action="{{ route('task.register_ok') }}">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="">구분</label>
-                    <div class="col-sm-6 text-center" data-toggle="buttons">
-                        <label class="btn btn-default _task_type" style="width:49%;">
-                            <input name="task_type" type="radio" value="product" />
-                            <span class="fa fa-check"></span>&nbsp;제품
-                        </label>
-                        <label class="btn btn-default _task_type" style="width:49%;">
-                            <input name="task_type" type="radio" value="price" />
-                            <span class="fa fa-check"></span>&nbsp;원고료
-                        </label>
-                    </div>
+                    @include('task.task_template')
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label" for="title">태스크명</label>

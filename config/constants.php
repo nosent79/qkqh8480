@@ -10,6 +10,7 @@
             'task_type' => [
                 'product' => '제품',
                 'price' => '원고료',
+                'insta' => '인스타그램',
             ],
             'task_state' => [
 //                ''     => '전체',

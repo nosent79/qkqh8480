@@ -22,24 +22,26 @@
         <div class="">
             <div class="collapse" id="filter">
                 <form id="frmSearch" name="frmSearch" class="form-horizontal" method="get" action="{{ route('task.index') }}">
+                    <input type="hidden" name="orderby[deadline_date]" value="asc" />
+                    <input type="hidden" name="task_type" value="" />
                 <div class="well">
                     {{--<select class="form-control" name="orderby[reg_date]">--}}
                         {{--<option value="">전체</option>--}}
                         {{--<option value="asc">과거기준</option>--}}
                         {{--<option value="desc"></option>--}}
                     {{--</select>--}}
-                    <h4>정렬구분</h4>
-                    <select class="form-control" name="orderby[deadline_date]">
-                        <option value="asc">마감임박순</option>
-                        <option value="desc">등록일최근</option>
-                    </select>
-                    <h4>타입구분</h4>
-                    <select class="form-control" name="task_type">
-                        <option value="">전체</option>
-                        @foreach(config('constants.task')['task_type'] as $k => $v)
-                            <option value="{{ $k }}" {{ getSelectedText($k, $params->get('task_type'), 'selected') }}>{{ $v }}</option>
-                        @endforeach
-                    </select>
+                    {{--<h4>정렬구분</h4>--}}
+                    {{--<select class="form-control" name="orderby[deadline_date]">--}}
+                        {{--<option value="asc">마감임박순</option>--}}
+                        {{--<option value="desc">등록일최근</option>--}}
+                    {{--</select>--}}
+                    {{--<h4>타입구분</h4>--}}
+                    {{--<select class="form-control" name="task_type">--}}
+                        {{--<option value="">전체</option>--}}
+                        {{--@foreach(config('constants.task')['task_type'] as $k => $v)--}}
+                            {{--<option value="{{ $k }}" {{ getSelectedText($k, $params->get('task_type'), 'selected') }}>{{ $v }}</option>--}}
+                        {{--@endforeach--}}
+                    {{--</select>--}}
                     <h4>상태구분</h4>
                     <select class="form-control" name="task_state">
                         <option value="">전체</option>
@@ -60,7 +62,12 @@
         @forelse($tasks as $k => $v)
             @collect($v)
                 <div class="thumbnail">
-                    <a href="{{ route('task.view', ['task_id' => $v->get('task_id') ]) }}">
+                    <a href="{{ route('task.view', [
+                        'task_id' => $v->get('task_id'),
+                        'orderby[deadline_date]' => $params->get('orderby')['deadline_date'],
+                        'task_state' => $params->get('task_state'),
+                        'comp_name' => $params->get('comp_name')
+                     ]) }}">
                     <div>
                         <div class="text-left" style="float:left">
                             <span class="label label-default">{{ $v->get('deadline_date') }}</span>
