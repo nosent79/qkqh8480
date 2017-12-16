@@ -61,6 +61,9 @@
         {{-- 반복문 시작 --}}
         @forelse($tasks as $k => $v)
             @collect($v)
+            @php
+                $task_type_color = ($v->get('task_type') === 'insta') ? 'info' : 'default';
+            @endphp
                 <div class="thumbnail">
                     <a href="{{ route('task.view', [
                         'task_id' => $v->get('task_id'),
@@ -71,7 +74,7 @@
                     <div>
                         <div class="text-left" style="float:left">
                             <span class="label label-default">{{ $v->get('deadline_date') }}</span>
-                            <span class="label label-default">{{ config('constants.task')['task_type'][$v->get('task_type')] }}</span>
+                            <span class="label label-{{ $task_type_color }}">{{ config('constants.task')['task_type'][$v->get('task_type')] }}</span>
 {{--                            <span class="label label-default">{{ $v->get('corp_name') }}</span>--}}
                             @if (in_array($v->get('task_state'), ['w', 'dc', 'wc']))
                             <span class="label label-default">{{ config('constants.task')['task_state'][$v->get('task_state')] }}</span>
