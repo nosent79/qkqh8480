@@ -33,6 +33,7 @@ class TaskController
     public function index()
     {
         $params = collect($this->request->all());
+
         $tasks = $this ->task->getTaskExceptDeleted($params);
 
         return view('task.index', [

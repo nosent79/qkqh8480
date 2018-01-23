@@ -36,7 +36,6 @@ class Task extends Model
                         ->where('t.type', 'task_state');
                 })
                 ->orderby('t.ordering');
-
             $column = $params->get('orderby');
             $sort = "asc";
 
@@ -57,6 +56,8 @@ class Task extends Model
             }
 
             // 상태
+            // 초기화면은 상태가 'w' 대기인 것만 추출한다.
+            //
             if ($params->has('task_state')) {
                 $where = 'task_state';
                 $value = $params->get('task_state');
@@ -67,11 +68,10 @@ class Task extends Model
                     $query->where($where, $value);
                 }
 
-                $sort = "desc";
+                //$sort = "desc";
             } else {
                 $query->whereIn('task_state', ['w'] );
             }
-
             // 업체명
             if ($params->has('corp_name')) {
                 $where = 'corp_name';
