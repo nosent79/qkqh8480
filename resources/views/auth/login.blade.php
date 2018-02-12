@@ -9,7 +9,7 @@
             <label for="user_pwd" class="sr-only">Password</label>
             <input type="password" id="user_pwd" name="user_pwd" class="form-control" placeholder="비밀번호" required>
             <div class="empty_space">
-                <div class="naver_id_login" id="naver_id_login" ><span>네이버 아이디로 로그인</span></div>
+                {{--<div class="naver_id_login" id="naver_id_login" ><span>네이버 아이디로 로그인</span></div>--}}
             </div>
             <div class="checkbox">
                 <label>
