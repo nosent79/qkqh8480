@@ -33,6 +33,21 @@ $app->group(['prefix' => 'api'], function () use ($app) {
             'as' => 'api.v1.didimdol_loan_rate', 'uses' => 'APIController@didimdolLoanRate'
         ]);
     });
+
+    $app->group(['prefix' => 'tour'], function () use ($app) {
+        $app->get('index', [
+            'as' => 'api.tour.index', 'uses' => 'TourController@index'
+        ]);
+        $app->post('index', [
+            'as' => 'api.tour.index', 'uses' => 'TourController@index'
+        ]);
+        $app->get('result', [
+            'as' => 'api.tour.result', 'uses' => 'TourController@result'
+        ]);
+        $app->post('result', [
+            'as' => 'api.tour.result', 'uses' => 'TourController@result'
+        ]);
+    });
 });
 
 $app->group(['prefix' => 'member', 'middleware' => 'auth'], function () use ($app) {

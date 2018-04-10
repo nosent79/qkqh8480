@@ -245,3 +245,78 @@
             return urlGenerator()->asset($path, $secured);
         }
     }
+
+if (! function_exists('convertUrlEncode')) {
+    /* ▼ 배열키값을 검색하여 해당 코드를 가져온다 */
+    function convertUrlEncode($str, $flag = true)
+    {
+        if ($flag) {
+            return urlencode($str);
+        }
+
+        return $str;
+    }
+}
+
+if (! function_exists('getArrayValue')) {
+    /* ▼ 배열키값을 검색하여 해당 코드를 가져온다 */
+    function getArrayValue($index, $arr, $default = "")
+    {
+        $result = $default;
+
+        if (is_array($arr) && array_key_exists($index, $arr)) {
+            $result = $arr[$index];
+        }
+        return $result;
+    }
+    /* ▲ 배열키값을 검색하여 해당 코드를 가져온다 */
+}
+
+/**
+ * 현재 달의 초일 구하기
+ */
+if (! function_exists('getFirstDay')) {
+    function getFirstDay($date, $format = 'Ymd')
+    {
+        $first_date = date($format, mktime(0,0,0, $date[1], 1, $date[0]));
+
+        return $first_date;
+    }
+}
+
+/**
+ * 현재 달의 말일 구하기
+ */
+if (! function_exists('getLastDay')) {
+    function getLastDay($date, $format = 'Ymd')
+    {
+        $last_date = date($format, mktime(0,0,0,$date[1]+1, 0, $date[0]));
+
+        return $last_date;
+    }
+}
+
+/**
+ * 날짜 포맷 설정
+ */
+if (! function_exists('getParseDate')) {
+    function getParseDate($date, $format = 'Y-m-d')
+    {
+        $date = preg_replace("/\D/", '', $date);
+        $parseDate = date($format, strtotime($date));
+
+        return $parseDate;
+    }
+}
+/**
+ * 날짜 포맷 설정
+ */
+if (! function_exists('setTourParams')) {
+    function setTourParams($key, $params)
+    {
+        $array = [];
+        $default = "'numOfRows', 'pageNo', 'mobileOS', 'mobileApp', '_type'";
+
+        return $array[$key] = compact($default, $params);
+    }
+}
