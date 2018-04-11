@@ -1,8 +1,29 @@
 
-@php
-    header("Content-Type: text/plain");
-@endphp
+{{--@php--}}
+    {{--header("Content-Type: text/plain");--}}
+{{--@endphp--}}
+<style>
+    /* Always set the map height explicitly to define the size of the div
+* element that contains the map. */
+    #map {
+        width:80%;
+        height: 50%;
+    }
 
+    #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+    }
+</style>
 <div class="tour">
     <div id="tourTip">
             <span>한국관광공사에서 제공하는 공공데이터를 활용하여 <?=$result['title']?>를 소개합니다.</span>
@@ -79,5 +100,29 @@
             </ul>
             @endif
         </div>
+    </div>
+    <div>
+        <div id="map"></div>
+        <script>
+
+            function initMap() {
+                var point = {lat: 37.5788222356, lng: 126.9769930325};
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 16,
+                    center: point
+                });
+
+                var marker = new google.maps.Marker({
+                    position: point,
+                    map: map,
+                    title: ''
+                });
+
+            }
+
+        </script>
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC22IIpggFjcBIT68rtIjkhhJ60LlONtRo&callback=initMap">
+        </script>
     </div>
 </div>

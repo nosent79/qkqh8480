@@ -216,7 +216,7 @@
                 }
             } else {
 
-                return ($value === $selected) ? $txt : '';
+                return ($value == $selected) ? $txt : '';
             }
         }
     }

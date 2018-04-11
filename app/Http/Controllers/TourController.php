@@ -112,10 +112,31 @@ class TourController
             'eventEndDate' => $eventEndDate,
         ];
 
+        $totalCnt = $data[$this->tour->getService()[0]]['totalCount'];
+
+        $PagePerBlock = 10;
+
+        $pageNum = ceil($totalCnt / $numOfRows);  // 총 페이지
+        $blockNum = ceil($pageNum / $PagePerBlock); // 총 블록
+        $nowBlock = ceil($pageNo / $PagePerBlock);
+
+        $s_page = ($nowBlock * $PagePerBlock) - ($PagePerBlock - 1);
+
+        if ($s_page <= 1) {
+            $s_page = 1;
+        }
+        $e_page = $nowBlock*$PagePerBlock;
+        if ($pageNum <= $e_page) {
+            $e_page = $pageNum;
+        }
+
+        $pageInfo = compact('pageNo', 'PagePerBlock','PagePerblock', 'pageNum', 'blockNum', 'nowBlock', 's_page', 'e_page');
+
         return view('api.tour.index', [
             'data'  => $data,
-            'param' => $params,
-            'tour'  => $this->tour->getService()
+            'params' => $info['searchFestival'],
+            'tour'  => $this->tour->getService(),
+            'pages' => $pageInfo
         ]);
     }
 
