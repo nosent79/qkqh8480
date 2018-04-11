@@ -73,8 +73,8 @@ class TourController
         $date = explode('-', date('Y-m-d'));
         $defaultStartDate = getFirstDay($date, 'Ymd');
         $defaultEndDate = getLastDay($date, 'Ymd');
-        $eventStartDate = ($this->request->has('eventStartDate', '')) ? getParseDate($this->request->get('eventStartDate'), 'Ymd') : $defaultStartDate;
-        $eventEndDate = ($this->request->has('eventEndDate', '')) ? getParseDate($this->request->get('eventEndDate'), 'Ymd') : $defaultEndDate;
+        $eventStartDate = getParseDate($this->request->get('eventStartDate', $defaultStartDate), 'Ymd');
+        $eventEndDate = getParseDate($this->request->get('eventEndDate', $defaultEndDate), 'Ymd');
 
         $_type = $this->request->get('_type', 'json');
 

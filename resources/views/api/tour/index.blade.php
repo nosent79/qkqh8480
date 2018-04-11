@@ -34,6 +34,8 @@
                     <dl>
                         <dt data-seq="{{ $item['contentid'] }}">{{ $item['title'] }}</dt>
                         <dd>{{ $item['tel'] }}</dd>
+                        <dd>{{ getParseDate(getArrayValue('createdtime', $item), 'Y-m-d H:i:s')  }}</dd>
+                        <dd>{{ getParseDate(getArrayValue('modifiedtime', $item), 'Y-m-d H:i:s')  }}</dd>
                         <dd>{{ getArrayValue('readcount', $item, 0) }}</dd>
                         <dd>{{ getParseDate($item['eventstartdate'], "Y.m.d") . " ~ " . getParseDate($item['eventenddate'], "Y.m.d") }}</dd>
                     </dl>
