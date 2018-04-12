@@ -96,7 +96,7 @@ class Tour {
             $responseJSON = curl_exec($ch);
 
             if (curl_error($ch)) {
-                throw new Exception();
+                throw new \Exception();
             }
             curl_close($ch);
 
@@ -104,7 +104,7 @@ class Tour {
             array_push($this->data, $responseJSON);
 
             return true;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->error = $e;
 
             return false;
@@ -119,6 +119,7 @@ class Tour {
                 $queryParams = $this->url[$k];
                 $queryParams .= '?' . urlencode('ServiceKey') . '=' . SERVICE_KEY;
                 $queryParams .= '&' . $param;
+
                 if (!$this->comCUrl($queryParams)) {
                     return false;
                 }

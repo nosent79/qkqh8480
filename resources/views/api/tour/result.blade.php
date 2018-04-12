@@ -74,7 +74,7 @@
             <ul>
                 @foreach($images as $k => $v)
                     {{--<label class="_ts"><input type="radio" name="task_state" value="{{ $k }}" {{ getSelectedText($params->get('task_state'), $k, 'checked') }} disabled="true">{{ $v }}</label>--}}
-                    <li><img width="300" src="{{ $v['originimgurl'] }}" /></li>
+                    <li><img src="{{ $v['originimgurl'] }}" /></li>
                 @endforeach
             </ul>
             @endif

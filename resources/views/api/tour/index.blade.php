@@ -21,6 +21,8 @@
             <input type="date" name="eventEndDate" value="{{ getParseDate($params['eventEndDate'], "Y-m-d") }}"/>
 
             <button id="btnSubmit">검색</button>
+
+            <a href="{{ route('api.sightseeing.index') }}" />관광지로 이동~</a>
         </form>
     </div>
     <div id="list">
@@ -33,11 +35,10 @@
                 <li>
                     <dl>
                         <dt data-seq="{{ $item['contentid'] }}">{{ $item['title'] }}</dt>
-                        <dd>{{ $item['tel'] }}</dd>
-                        <dd>{{ getParseDate(getArrayValue('createdtime', $item), 'Y-m-d H:i:s')  }}</dd>
-                        <dd>{{ getParseDate(getArrayValue('modifiedtime', $item), 'Y-m-d H:i:s')  }}</dd>
-                        <dd>{{ getArrayValue('readcount', $item, 0) }}</dd>
                         <dd>{{ getParseDate($item['eventstartdate'], "Y.m.d") . " ~ " . getParseDate($item['eventenddate'], "Y.m.d") }}</dd>
+                        <dd>{{ $item['tel'] }}</dd>
+                        <dd>{{ getParseDate(getArrayValue('createdtime', $item), 'Y-m-d H:i:s') . " ~ " . getParseDate(getArrayValue('modifiedtime', $item), 'Y-m-d H:i:s') }}</dd>
+                        <dd>{{ getArrayValue('readcount', $item, 0) }}</dd>
                     </dl>
                 </li>
                 @endforeach
@@ -58,13 +59,13 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 @if ($pages->get('nowBlock') != 1)
-                    <li class="page-item"><a class="page-link" href="{{ route('api.tour.index') }}?pageNo={{ $pages->get('s_page')-1 }}">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="{{ route('api.tour.index') }}?pageNo={{ $pages->get('s_page')-1 ."&" . $pageParams }} }}">Previous</a></li>
                 @endif
                 @for ($p=$pages->get('s_page'); $p<=$pages->get('e_page'); $p++)
-                    <li class="page-item {{ getSelectedText($pages->get('pageNo'), $p, 'active') }}"><a class="page-link" href="{{ route('api.tour.index') }}?pageNo={{ $p }}">{{ $p }}</a></li>
+                    <li class="page-item {{ getSelectedText($pages->get('pageNo'), $p, 'active') }}"><a class="page-link" href="{{ route('api.tour.index') }}?pageNo={{ $p . "&" . $pageParams }}">{{ $p }}</a></li>
                 @endfor
                 @if ($pages->get('blockNum') != $pages->get('nowBlock'))
-                    <li class="page-item"><a class="page-link" href="{{ route('api.tour.index') }}?pageNo={{ $pages->get('e_page')+1 }}">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="{{ route('api.tour.index') }}?pageNo={{ $pages->get('e_page')+1 . "&" . $pageParams }}">Next</a></li>
                 @endif
             </ul>
         </nav>
