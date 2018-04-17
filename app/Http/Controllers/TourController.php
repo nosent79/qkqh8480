@@ -166,6 +166,193 @@ class TourController
         ]);
     }
 
+    public function camping()
+    {
+        $numOfRows = $this->request->get('numOfRows', '10');
+        $pageNo = $this->request->get('pageNo', '1');
+        $MobileOS = $this->request->get('MobileOS', 'ETC');
+        $MobileApp = $this->request->get('MobileApp', 'AppTest');
+        $listYN = $this->request->get('listYN', 'Y');
+        $arrange = $this->request->get('arrange', 'C');
+        $contentTypeId = $this->request->get('contentTypeId', 28);
+        $areaCode = $this->request->get('areaCode', '');
+        $sigunguCode = $this->request->get('sigunguCode', '');
+        $cat1 = $this->request->get('cat1', 'A03');
+        $cat2 = $this->request->get('cat2', 'A0302');
+        $cat3 = $this->request->get('cat3', 'A03021700');
+        $keyword = $this->request->get('keyword', '캠핑');
+        $_type = $this->request->get('_type', 'json');
+
+        $info = [];
+        $info['searchKeyword'] = compact(
+            'numOfRows', 'pageNo', 'MobileOS',
+            'MobileApp', 'listYN', 'arrange', 'contentTypeId', 'areaCode', 'sigunguCode',
+            'cat1', 'cat2', 'cat3', 'keyword', '_type');
+
+        $this->tour->setParam($info);
+        $this->tour->setUrl('searchKeyword');
+        if ($this->tour->fetchData() === false) {
+            echo $this->tour->error->getMessage();
+            exit;
+        };
+
+        $data = $this->tour->decode();
+
+        if ($data === false) {
+            echo $this->tour->error->getMessage() . PHP_EOL;
+            echo $this->tour->error->getLine() . PHP_EOL;
+            exit;
+        }
+
+        $totalCnt = $data[$this->tour->getService()[0]]['totalCount'];
+
+        $PagePerBlock = 10;
+
+        $pageNum = ceil($totalCnt / $numOfRows);  // 총 페이지
+        $blockNum = ceil($pageNum / $PagePerBlock); // 총 블록
+        $nowBlock = ceil($pageNo / $PagePerBlock);
+
+        $s_page = ($nowBlock * $PagePerBlock) - ($PagePerBlock - 1);
+
+        if ($s_page <= 1) {
+            $s_page = 1;
+        }
+        $e_page = $nowBlock*$PagePerBlock;
+        if ($pageNum <= $e_page) {
+            $e_page = $pageNum;
+        }
+
+        $pageInfo = compact('pageNo', 'PagePerBlock','PagePerblock', 'pageNum', 'blockNum', 'nowBlock', 's_page', 'e_page');
+        $pageParams = http_build_query(compact('arrange', 'contentTypeId', 'cat1', 'cat2', 'cat3', 'keyword', 'areaCode'));
+
+        return view('api.camping.index', [
+            'data'  => $data,
+            'params' => $info['searchKeyword'],
+            'tour'  => $this->tour->getService(),
+            'pages' => $pageInfo,
+            'pageParams' => $pageParams
+        ]);
+    }
+
+    /**
+     * 캠핑장 정보 조회
+     *
+     * @return \Illuminate\View\View
+     */
+    public function campingDetail()
+    {
+        $numOfRows = $this->request->get('numOfRows', '10');
+        $pageNo = $this->request->get('pageNo', '1');
+        $MobileOS = $this->request->get('MobileOS', 'ETC');
+        $MobileApp = $this->request->get('MobileApp', 'AppTest');
+        $listYN = $this->request->get('listYN', 'Y');
+        $arrange = $this->request->get('arrange', 'C');
+        $contentTypeId = $this->request->get('contentTypeId', '15');
+        $areaCode = $this->request->get('areaCode', '');
+        $sigunguCode = $this->request->get('sigunguCode', '');
+
+        // required
+        $contentId = $this->request->get('contentId', '');
+
+        // optional
+        // detailCommon (공통정보 조회)
+        $defaultYN = $this->request->get('defaultYN', 'Y');
+        $firstImageYN = $this->request->get('firstImageYN', 'Y');
+        $areacodeYN = $this->request->get('areacodeYN', 'Y');
+        $catcodeYN = $this->request->get('catcodeYN', 'Y');
+        $addrinfoYN = $this->request->get('addrinfoYN', 'Y');
+        $mapinfoYN = $this->request->get('mapinfoYN', 'Y');
+        $overviewYN = $this->request->get('overviewYN', 'Y');
+
+        // detailIntro (소개정보 조회)
+        $introYN = $this->request->get('introYN', 'Y');
+
+        // detailInfo (반복정보 조회)
+        $detailYN = $this->request->get('detailYN', 'Y');
+
+        // common
+        $_type = $this->request->get('_type', 'json');
+
+        if (empty($contentId)) {
+            echo "정상적인 접근이 아닙니다.";
+
+            exit;
+        }
+
+        $info = [];
+
+        $info['detailCommon'] = compact(
+            'numOfRows', 'pageNo', 'MobileOS',
+            'MobileApp', 'contentId', 'contentTypeId',
+            'defaultYN', 'firstImageYN', 'areacodeYN',
+            'catcodeYN', 'addrinfoYN', 'mapinfoYN',
+            'overviewYN', '_type');
+
+        $info['detailIntro'] = compact(
+            'numOfRows', 'pageNo', 'MobileOS',
+            'MobileApp', 'contentId', 'contentTypeId', 'introYN', '_type');
+
+        $info['detailInfo'] = compact(
+            'numOfRows', 'pageNo', 'MobileOS',
+            'MobileApp', 'contentId', 'contentTypeId', 'detailYN', '_type');
+
+        $info['detailImage'] = compact(
+            'numOfRows', 'pageNo', 'MobileOS',
+            'MobileApp', 'contentId', 'imageYN', 'subImageYN', '_type');
+
+// STEP1.
+        $this->tour->setParam($info);
+        $this->tour->setContentId($contentId);
+        $this->tour->setUrl('detailCommon', 'detailIntro', 'detailInfo', 'detailImage');
+
+        if ($this->tour->fetchData() === false) {
+            echo $this->tour->error->getMessage();
+            exit;
+        }
+
+        $data = $this->tour->decode();
+        if ($data === false) {
+            echo $this->tour->error->getMessage() . PHP_EOL;
+            echo $this->tour->error->getLine() . PHP_EOL;
+            exit;
+        }
+
+        $result = [];
+        $images = [];
+        foreach ($this->tour->getService() as $v) {
+            $item = $data[$v]['items'];
+
+            if (empty($item)) {
+                continue;
+            }
+
+            $item = $item['item'];
+
+            if (count($item) !== count($item, 1)) {
+                $arrData = [];
+                foreach ($item as $vv) {
+
+                    if ($v === 'detailImage') {
+
+                        $images[] = $vv;
+                    }
+                    $arrData = array_merge($arrData, $vv);
+                }
+
+                $result = array_merge($result, $arrData);
+
+            } else {
+                $result = array_merge($result, $item);
+            }
+
+        }
+
+        return view('api.camping.result', [
+            'result'  => $result,
+            'images'  => $images
+        ]);
+    }
+
     public function sightseeing()
     {
         $numOfRows = $this->request->get('numOfRows', '10');
@@ -318,7 +505,7 @@ class TourController
         }
 
         $pageInfo = compact('pageNo', 'PagePerBlock','PagePerblock', 'pageNum', 'blockNum', 'nowBlock', 's_page', 'e_page');
-        $pageParams = http_build_query(compact('arrange', 'contentTypeId'));
+        $pageParams = http_build_query(compact('arrange', 'contentTypeId', 'eventStartDate', 'eventEndDate'));
 
         return view('api.tour.index', [
             'data'  => $data,

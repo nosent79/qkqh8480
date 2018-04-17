@@ -11,7 +11,7 @@
 |
 */
 $app->get('/', ['as' => '/', function () use ($app) {
-     return redirect()->route('auth.login');
+    return redirect()->route('auth.login');
 }]);
 
 // API 테스트
@@ -63,6 +63,38 @@ $app->group(['prefix' => 'api'], function () use ($app) {
         ]);
         $app->post('result', [
             'as' => 'api.sightseeing.result', 'uses' => 'TourController@areaBasedList'
+        ]);
+    });
+
+    $app->group(['prefix' => 'camping'], function () use ($app) {
+        $app->get('index', [
+            'as' => 'api.camping.index', 'uses' => 'TourController@camping'
+        ]);
+        $app->post('index', [
+            'as' => 'api.camping.index', 'uses' => 'TourController@camping'
+        ]);
+
+        $app->get('result', [
+            'as' => 'api.camping.result', 'uses' => 'TourController@campingDetail'
+        ]);
+        $app->post('result', [
+            'as' => 'api.camping.result', 'uses' => 'TourController@campingDetail'
+        ]);
+    });
+
+    $app->group(['prefix' => 'heritage'], function () use ($app) {
+        $app->get('index', [
+            'as' => 'api.heritage.index', 'uses' => 'HeritageController@getAgeCrltsList'
+        ]);
+        $app->post('index', [
+            'as' => 'api.heritage.index', 'uses' => 'HeritageController@getAgeCrltsList'
+        ]);
+
+        $app->get('result', [
+            'as' => 'api.heritage.result', 'uses' => 'HeritageController@getAgeCrltsDtls'
+        ]);
+        $app->post('result', [
+            'as' => 'api.heritage.result', 'uses' => 'HeritageController@getAgeCrltsDtls'
         ]);
     });
 });

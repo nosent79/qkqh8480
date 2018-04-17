@@ -25,6 +25,11 @@
             <a href="{{ route('api.sightseeing.index') }}" />관광지로 이동~</a>
         </form>
     </div>
+    @php
+        include app()->resourcePath('views/api/common/title_done.php');
+        //$done_title = explode("|", $tour_title_done);
+    @endphp
+
     <div id="list">
         <ul>
             @foreach ($tour as $v)
@@ -34,9 +39,14 @@
                 @foreach ($items as $item)
                 <li>
                     <dl>
-                        <dt data-seq="{{ $item['contentid'] }}">{{ $item['title'] }}</dt>
+                        @if(strpos($tour_title_done, $item['title']) !== false)
+                            <dt data-seq="{{ $item['contentid'] }}">{{ $item['title'] . " [완]" }}</dt>
+                        @else
+                            <dt data-seq="{{ $item['contentid'] }}">{{ $item['title'] }}</dt>
+                        @endif
+
                         <dd>{{ getParseDate($item['eventstartdate'], "Y.m.d") . " ~ " . getParseDate($item['eventenddate'], "Y.m.d") }}</dd>
-                        <dd>{{ $item['tel'] }}</dd>
+                        <dd>{{ getArrayValue('tel', $item) }}</dd>
                         <dd>{{ getParseDate(getArrayValue('createdtime', $item), 'Y-m-d H:i:s') . " ~ " . getParseDate(getArrayValue('modifiedtime', $item), 'Y-m-d H:i:s') }}</dd>
                         <dd>{{ getArrayValue('readcount', $item, 0) }}</dd>
                     </dl>
