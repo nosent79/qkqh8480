@@ -159,11 +159,11 @@
         'subnum' => '반복 일련번호',
     ];
 
-    $detailInfo['25'] = [
+    $detailInfo['32'] = [
         'roomcode' => '객실코드',
         'roomtitle' => '객실명칭',
         'roomsize1' => '객실크기(평)',
-        'roomcount' => '객실수$',
+        'roomcount' => '객실수',
         'roombasecount' => '기인원',
         'roommaxcount' => '최대인원',
         'roomoffseasonminfee1' => '비수기주중최소',
@@ -262,7 +262,6 @@
             </ul>
         </div>
     </div>
-
     <div id="tourImages" class="tourSection">
         <div class="title">관련 사진</div>
         <div class="content">
@@ -274,6 +273,14 @@
                     @endforeach
                 </ul>
             @endif
+        </div>
+    </div>
+
+    <div class="tourSection">
+        <div id="tourMore">
+            <a href='{{ "http://touristinkorea.com/" . config("constants.contentTypeKey.{$result['contenttypeid']}") . "/" . $result['contentid'] }}' target="_blank">
+                <img src="http://img1.daumcdn.net/thumb/R1920x0/?fname=http%3A%2F%2Fcfile22.uf.tistory.com%2Fimage%2F99921A455AF63201062914"  />
+            </a>
         </div>
     </div>
 </div>

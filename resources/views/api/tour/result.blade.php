@@ -80,4 +80,13 @@
             @endif
         </div>
     </div>
+
+    <div class="tourSection">
+        <div id="tourMore">
+            <a href='{{ "http://touristinkorea.com/" . config("constants.contentTypeKey.{$result['contenttypeid']}") . "/" . $result['contentid'] }}' target="_blank">
+                <img src="http://img1.daumcdn.net/thumb/R1920x0/?fname=http%3A%2F%2Fcfile22.uf.tistory.com%2Fimage%2F99921A455AF63201062914"  />
+            </a>
+        </div>
+    </div>
+
 </div>

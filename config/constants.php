@@ -32,6 +32,16 @@
             '38' => '쇼핑',
             '39' => '음식점',
         ],
+        'contentTypeKey' => [
+            '12' => 'tourist',
+            '14' => 'culture',
+            '15' => 'festival',
+            '25' => 'course',
+            '28' => 'reports',
+            '32' => 'stay',
+            '38' => 'shopping',
+            '39' => 'eatery',
+        ],
         'arrange' => [
             'A' => '제목순',
             'B' => '조회순',

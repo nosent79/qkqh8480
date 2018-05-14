@@ -159,7 +159,7 @@ class TourController
             }
 
         }
-
+//dd($result);
         return view('api.sightseeing.result', [
             'result'  => $result,
             'images'  => $images
@@ -355,7 +355,7 @@ class TourController
 
     public function sightseeing()
     {
-        $numOfRows = $this->request->get('numOfRows', '10');
+        $numOfRows = $this->request->get('numOfRows', '50');
         $pageNo = $this->request->get('pageNo', '1');
         $MobileOS = $this->request->get('MobileOS', 'ETC');
         $listYN = $this->request->get('listYN', 'Y');
@@ -435,7 +435,7 @@ class TourController
         /*
          * 조회 파라미터
          */
-        $numOfRows = $this->request->get('numOfRows', '10');
+        $numOfRows = $this->request->get('numOfRows', '50');
         $pageNo = $this->request->get('pageNo', '1');
         $MobileOS = $this->request->get('MobileOS', 'ETC');
         $MobileApp = $this->request->get('MobileApp', 'AppTest');
@@ -623,6 +623,7 @@ class TourController
             }
 
         }
+
         return view('api.tour.result', [
             'result'  => $result,
             'images'  => $images

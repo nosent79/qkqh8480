@@ -30,6 +30,11 @@
                 <a href="{{ route('api.tour.index') }}" />축제로 이동~</a>
             </form>
         </div>
+        @php
+            include app()->resourcePath('views/api/common/title_done.php');
+            //$done_title = explode("|", $tour_title_done);
+        @endphp
+
         <div id="list">
             <ul>
                 @foreach ($tour as $v)
@@ -39,7 +44,22 @@
                     @foreach ($items as $item)
                         <li>
                             <dl>
-                                <dt data-seq="{{ $item['contentid'] }}">{{ $item['title'] }}</dt>
+                                @php
+                                    $contenttypeid = $item['contenttypeid'];
+                                    if ($contenttypeid == '12') {
+                                        $title_done = $sight_title_done;
+                                    } elseif ($contenttypeid == '14') {
+                                        $title_done = $culture_title_done;
+                                    } else {
+                                        $title_done = $tour_title_done;
+                                    }
+                                @endphp
+                                @if(strpos($title_done, $item['title']) !== false)
+                                    <dt data-seq="{{ $item['contentid'] }}">{{ $item['title'] . " [완]" }}</dt>
+                                @else
+                                    <dt data-seq="{{ $item['contentid'] }}">{{ $item['title'] }}</dt>
+                                @endif
+
                                 <dd>{{ getArrayValue('addr1', $item) }}</dd>
                                 <dd>{{ "지역코드: " . getArrayValue('areacode', $item) }}</dd>
                                 <dd>{{ "생성일: " .getParseDate(getArrayValue('createdtime', $item), 'Y-m-d H:i:s') . " || 수정일: " . getParseDate(getArrayValue('modifiedtime', $item), 'Y-m-d H:i:s') }}</dd>

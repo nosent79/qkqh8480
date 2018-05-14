@@ -34,6 +34,13 @@ $app->group(['prefix' => 'api'], function () use ($app) {
         ]);
     });
 
+    $app->group(['prefix' => 'test'], function () use ($app) {
+        $app->get('index', [
+            'as' => 'api.test.index', 'uses' => 'TourController@main'
+        ]);
+
+    });
+
     $app->group(['prefix' => 'tour'], function () use ($app) {
         $app->get('index', [
             'as' => 'api.tour.index', 'uses' => 'TourController@index'
