@@ -440,7 +440,7 @@ class TourController
         $MobileOS = $this->request->get('MobileOS', 'ETC');
         $MobileApp = $this->request->get('MobileApp', 'AppTest');
         $listYN = $this->request->get('listYN', 'Y');
-        $arrange = $this->request->get('arrange', 'C');
+        $arrange = $this->request->get('arrange', 'Q');
         $contentTypeId = $this->request->get('contentTypeId', '15');
         $areaCode = $this->request->get('areaCode', '');
         $sigunguCode = $this->request->get('sigunguCode', '');

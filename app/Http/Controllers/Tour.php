@@ -181,7 +181,7 @@ class Tour {
 
     public function fetchContentId()
     {
-        $json = file_get_contents("tour_list.json");
+        $json = file_get_contents("tour_list");
         $data = json_decode($json, true);
 
         var_dump($data) or die();
