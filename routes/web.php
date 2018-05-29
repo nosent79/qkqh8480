@@ -57,6 +57,22 @@ $app->group(['prefix' => 'api'], function () use ($app) {
         ]);
     });
 
+    $app->group(['prefix' => 'blog'], function () use ($app) {
+        $app->get('index', [
+            'as' => 'api.blog.index', 'uses' => 'BlogController@index'
+        ]);
+        $app->post('index', [
+            'as' => 'api.blog.index', 'uses' => 'BlogController@index'
+        ]);
+
+        $app->get('result', [
+            'as' => 'api.blog.result', 'uses' => 'BlogController@result'
+        ]);
+        $app->post('result', [
+            'as' => 'api.blog.result', 'uses' => 'BlogController@result'
+        ]);
+    });
+
     $app->group(['prefix' => 'sightseeing'], function () use ($app) {
         $app->get('index', [
             'as' => 'api.sightseeing.index', 'uses' => 'TourController@sightseeing'
