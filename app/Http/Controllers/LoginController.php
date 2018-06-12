@@ -49,7 +49,6 @@ class LoginController extends Controller
         try {
             $params = collect($this->request->all());
             $rstMember = $this->member->getMember($params);
-
             if ($rstMember === false) {
                 throw new CustomException('회원정보가 일치하지 않습니다.', '1', route('auth.login'));
             }

@@ -34,7 +34,6 @@ class Member extends Model
                 ->select('user_id', 'user_pwd', 'user_name', 'user_email')
                 ->where('user_id', $params->get('user_id'))
                 ->first());
-
             if (! Hash::check($params->get('user_pwd'), $rstMember->get('user_pwd'))) {
 
                 return false;
@@ -42,7 +41,6 @@ class Member extends Model
 
             return $rstMember;
         } catch (\Exception $e) {
-
             return false;
         }
     }
@@ -83,12 +81,13 @@ class Member extends Model
     {
         try {
             $password = app('hash')->make($params->get('user_pwd'));
-
+var_dump($password) or die();
             return $this
                         ->where('user_id', $params->get('user_id'))
                         ->update(['user_pwd' => $password]);
 
         } catch (\Exception $e) {
+            dd($e);
             log::error(__METHOD__, $e);
         }
     }
