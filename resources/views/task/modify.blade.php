@@ -8,7 +8,7 @@
             </div>
             <form id="frmTask" name="frmTask" class="form-horizontal" method="post" action="{{ route('task.modify_ok') }}">
                 <input type="hidden" name="task_id" value="{{ $params->get('task_id') }}" />
-                <input type="hidden" name="task_state" value="{{ $params->get('task_state') }}" />
+                <input type="hidden" name="task_state_current" value="{{ $params->get('task_state') }}" />
                 <input type="hidden" name="corp_name" value="{{ $params->get('corp_name') }}" />
                 <div class="form-group">
                     @include('task.task_template')

@@ -160,7 +160,7 @@ class TaskController
                 throw new CustomException('오류가 발생했습니다.', 1, route('task.index', ['task_state' => $params->get('task_state')]));
             }
 
-            fnMoveUrl('정상적으로 처리되었습니다.', 1, route('task.index', ['task_state' => $params->get('task_state')]));
+            fnMoveUrl('정상적으로 처리되었습니다.', 1, route('task.index', ['task_state' => $params->get('task_state_current')]));
         } catch (CustomException $e) {
             echo $e;
         } catch (\Exception $e) {
