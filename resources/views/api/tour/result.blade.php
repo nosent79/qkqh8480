@@ -204,6 +204,7 @@ if (existData($result['program']) === true) {
         </div>
     </div>
 
+    {{--
     <div class="tourSection">
         <div id="tourMore">
             <a href='{{ "http://touristinkorea.com/" . config("constants.contentTypeKey.{$result['contenttypeid']}") . "/" . $result['contentid'] }}' target="_blank">
@@ -211,5 +212,6 @@ if (existData($result['program']) === true) {
             </a>
         </div>
     </div>
+    --}}
 
 </div>
