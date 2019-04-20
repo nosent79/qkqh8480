@@ -61,6 +61,9 @@ $app->group(['prefix' => 'api'], function () use ($app) {
         $app->get('index', [
             'as' => 'api.blog.index', 'uses' => 'BlogController@index'
         ]);
+        $app->get('sightseeing', [
+            'as' => 'api.blog.sightseeing', 'uses' => 'BlogController@blogSightseeing'
+        ]);
         $app->get('blogIndex', [
             'as' => 'api.blog.blogIndex', 'uses' => 'BlogController@blogIndex'
         ]);

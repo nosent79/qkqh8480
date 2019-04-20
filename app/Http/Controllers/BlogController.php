@@ -21,6 +21,80 @@ class BlogController
         $this->tour = $tour;
     }
 
+    public function blogSightseeing()
+    {
+        $numOfRows = $this->request->get('numOfRows', '50');
+        $pageNo = $this->request->get('pageNo', '1');
+        $MobileOS = $this->request->get('MobileOS', 'ETC');
+        $listYN = $this->request->get('listYN', 'Y');
+        $arrange = $this->request->get('arrange', 'C');
+        $MobileApp = $this->request->get('MobileApp', 'AppTest');
+        $contentTypeId = $this->request->get('contentTypeId', 12);
+        $areaCode = $this->request->get('areaCode', '');
+        $sigunguCode = $this->request->get('sigunguCode', '');
+        $cat1 = $this->request->get('cat1', '');
+        $cat2 = $this->request->get('cat2', '');
+        $cat3 = $this->request->get('cat3', '');
+        $_type = $this->request->get('_type', 'json');
+
+        if (empty($contentTypeId)) {
+            echo "정상적인 접근이 아닙니다.";
+
+            exit;
+        }
+
+        $info = [];
+        $info['areaBasedList'] = compact(
+            'numOfRows', 'pageNo', 'MobileOS',
+            'MobileApp', 'listYN', 'arrange', 'contentTypeId', 'areaCode', 'sigunguCode',
+            'cat1', 'cat2', 'cat3', '_type');
+
+        $this->tour->setParam($info);
+        $this->tour->setUrl('areaBasedList');
+
+        if ($this->tour->fetchData() === false) {
+            echo $this->tour->error->getMessage();
+            exit;
+        };
+
+        $data = $this->tour->decode();
+
+        if ($data === false) {
+            echo $this->tour->error->getMessage() . PHP_EOL;
+            echo $this->tour->error->getLine() . PHP_EOL;
+            exit;
+        }
+
+        $totalCnt = $data[$this->tour->getService()[0]]['totalCount'];
+
+        $PagePerBlock = 10;
+
+        $pageNum = ceil($totalCnt / $numOfRows);  // 총 페이지
+        $blockNum = ceil($pageNum / $PagePerBlock); // 총 블록
+        $nowBlock = ceil($pageNo / $PagePerBlock);
+
+        $s_page = ($nowBlock * $PagePerBlock) - ($PagePerBlock - 1);
+
+        if ($s_page <= 1) {
+            $s_page = 1;
+        }
+        $e_page = $nowBlock*$PagePerBlock;
+        if ($pageNum <= $e_page) {
+            $e_page = $pageNum;
+        }
+
+        $pageInfo = compact('pageNo', 'PagePerBlock','PagePerblock', 'pageNum', 'blockNum', 'nowBlock', 's_page', 'e_page');
+        $pageParams = http_build_query(compact('arrange', 'contentTypeId', 'areaCode'));
+
+        return view('api.blog.sightseeing', [
+            'data'  => $data,
+            'params' => $info['areaBasedList'],
+            'tour'  => $this->tour->getService(),
+            'pages' => $pageInfo,
+            'pageParams' => $pageParams
+        ]);
+    }
+
     public function blogIndex()
     {
         /*
