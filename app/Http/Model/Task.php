@@ -92,6 +92,9 @@ class Task extends Model
                 // 마감일
                 if (array_key_exists('deadline_date', $column)) {
                     $orderby = 'deadline_date';
+                    if ($params->get('task_state') === 'dc') {
+                        $orderby = 'deposit_date';
+                    }
                     $type = $column['deadline_date'];
 
                     $query->orderBy($orderby, $type);

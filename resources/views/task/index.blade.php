@@ -22,7 +22,7 @@
         <div class="">
             <div class="collapse" id="filter">
                 <form id="frmSearch" name="frmSearch" class="form-horizontal" method="get" action="{{ route('task.index') }}">
-                    <input type="hidden" name="orderby[deadline_date]" value="asc" />
+                    <input type="hidden" name="orderby[deadline_date]" value="desc" />
                     <input type="hidden" name="task_type" value="" />
                 <div class="well">
                     {{--<select class="form-control" name="orderby[reg_date]">--}}
